@@ -3,6 +3,9 @@
 # Author: Leo
 
 
+import random
+
+
 class Maze:
     """ Define the Maze structure of the project
     """
@@ -60,22 +63,41 @@ class Maze:
         """
         empty_spaces = []
 
-        for x in self._map:
-            for y in x:
+        for x, row in enumerate(self._map):
+            for y, content in enumerate(row):
                 if self.check(x, y):
                     empty_spaces.append((x, y))
 
-        return empty_spaces 
-
+        return empty_spaces
 
 
     def find_random_spot(self):
-        # to be code
-        # FIXME
-        print(len(self._map))       # number of rows
-        print(len(self._map[0]))    # number of columns
-        pass
+        """
+        Finds a random empty space in the maze. 
+        
+        This function calls the find_empty_spaces function which creates a new
+        list every time it is needed. In the future it may be a good idea to
+        store this list permanently if this function will be called often.
 
+        :return: a tuple containing the x and y index values of the randomly
+        selected empty space
+        :rtype: a tuple containing two integers
+        """
+        empty_spaces = self.find_empty_spaces()
+        random_index = random.randint(0, len(empty_spaces) - 1)
+        return empty_spaces[random_index]
+
+
+    def print_maze_content(self, space):
+        """
+        This function is for testing purposes.
+
+        It will print the value stored inside the maze at the designated space.
+
+        :param space: A tuple containing two integers - the x and y indexes of
+        the space to print
+        """
+        print("Content of space: {}".format(self._map[space[0]][space[1]]))
 
 
 ################################
@@ -84,4 +106,9 @@ if __name__ == "__main__":
     # result = m1.check(0,3)
     # print(result)
     m1.display()
-    m1.find_random_spot()
+
+    random_space = m1.find_random_spot()
+    print("Random space indexes: x={}, y={}".format(random_space[0],\
+        random_space[1]))
+    m1.print_maze_content(random_space)
+    
