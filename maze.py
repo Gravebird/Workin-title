@@ -50,6 +50,25 @@ class Maze:
             print("\n")
 
 
+    def find_empty_spaces(self):
+        """ 
+        Creates an array containing the x and y position of each empty space in
+        the maze.
+
+        :return: The array of empty spaces
+        :rtype: array of tuples (x and y values)
+        """
+        empty_spaces = []
+
+        for x in self._map:
+            for y in x:
+                if self.check(x, y):
+                    empty_spaces.append((x, y))
+
+        return empty_spaces 
+
+
+
     def find_random_spot(self):
         # to be code
         # FIXME
