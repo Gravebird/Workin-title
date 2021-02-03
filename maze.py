@@ -26,6 +26,7 @@ class Maze:
             mazeList.append(list(item)) 
 
         self._map = mazeList
+        self.empty_spaces = self.find_empty_spaces()
 
 
     def check(self, row, col):
@@ -74,18 +75,13 @@ class Maze:
     def find_random_spot(self):
         """
         Finds a random empty space in the maze. 
-        
-        This function calls the find_empty_spaces function which creates a new
-        list every time it is needed. In the future it may be a good idea to
-        store this list permanently if this function will be called often.
 
         :return: a tuple containing the x and y index values of the randomly
         selected empty space
         :rtype: a tuple containing two integers
         """
-        empty_spaces = self.find_empty_spaces()
-        random_index = random.randint(0, len(empty_spaces) - 1)
-        return empty_spaces[random_index]
+        random_index = random.randint(0, len(self.empty_spaces) - 1)
+        return self.empty_spaces[random_index]
 
 
     def print_maze_content(self, space):
@@ -97,7 +93,10 @@ class Maze:
         :param space: A tuple containing two integers - the x and y indexes of
         the space to print
         """
-        print("Content of space: {}".format(self._map[space[0]][space[1]]))
+        content = self._map[space[0]][space[1]]
+        if content == " ":
+            content = "Empty"
+        print("Content of space: {}".format(content))
 
 
 ################################
