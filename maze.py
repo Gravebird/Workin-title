@@ -26,7 +26,7 @@ class Maze:
             mazeList.append(list(item)) 
 
         self._map = mazeList
-        self.empty_spaces = self.find_empty_spaces()
+        self._empty_spaces = self.find_empty_spaces()
 
 
     def check(self, row, col):
@@ -80,8 +80,8 @@ class Maze:
         selected empty space
         :rtype: a tuple containing two integers
         """
-        random_index = random.randint(0, len(self.empty_spaces) - 1)
-        return self.empty_spaces[random_index]
+        random_index = random.randint(0, len(self._empty_spaces) - 1)
+        return self._empty_spaces[random_index]
 
 
     def print_maze_content(self, space):
