@@ -28,16 +28,45 @@ class Maze:
             mazeList.append(list(item)) 
 
         self._map = mazeList
+        self._player = Player()
+        self._player_space = self.find_player_space()
         self._empty_spaces = self.find_empty_spaces()
+        
         self.add_object_to_maze("A")
         self.add_object_to_maze("B")
         self.add_object_to_maze("C")
         self.add_object_to_maze("D")
 
 
-    def can_move_to(self, row:int, col:int):
+    def find_player_space(self):
         """
-        Method to check if a position is empty
+        Searches the maze for the space that the player is occupying.
+
+        This function is called when the maze is created, and then the maze
+        will track the player as they move, so there is no need to call this
+        function again.
+
+        :return: The coordinates of the space that contain the player
+        :rtype: A tuple of 2 integers | X,Y Coordinates
+
+        :raises Exception: if the player cannot be found
+        """
+        space_of_player = None
+
+        for x, row in enumerate(self._map):
+            for y, content in enumerate(row):
+                if content == 'P':
+                    space_of_player = (x, y)
+                    break
+
+        if space_of_player == None:
+            raise Exception("Could not find player in maze!")
+
+        return space_of_player
+
+
+    def can_move_to(self, row, col):
+        """Method to check if a position is empty
 
         :param row: row number
         :type row: integer
@@ -49,26 +78,48 @@ class Maze:
         :rtype: Boolean
         """
         able_to_move = True
+
         if self._map[row][col] == 'X':
             able_to_move = False
+
         return able_to_move
 
 
     def is_item(self, space:tuple):
         """
-        Checks if the specified space contains an item. It does this by looking
-        at the content of the maze array at that location. If it sees X (wall),
-        P (player), or an empty space it knows that space is not an item.
-        Any other value in the space counts as an item (may change this later)
+        Checks if the specified space contains an item. 
+        It does this by lookingat the content of the maze array at that location.
+        If it sees X (wall), P (player), or an empty space it knows that space
+        is not an item.Any other value in the space counts as an item 
+        (may change this later)
 
         :param space: The space to check for an item
         :type space: A tuple of 2 integers | X,Y Coordinates
         """
         content = self._map[space[0]][space[1]]
         item_in_space = True
-        if content != ' ' and content != 'P' and content != 'X':
+
+        if content != ' ' and content != 'P' and content != 'X' \
+            and content != 'E':
             item_in_space = False
+
         return item_in_space
+
+
+    def is_exit(self, space):
+        """
+        Checks if the specified space contains the exit.
+
+        :param space: The space to check
+        :type space: A tuple containing two ints (x and y index of the space)
+
+        :return: true if the space contains the exit, false otherwise
+        :rtype: bool
+        """
+        is_exit = False
+        if self._map[space[0]][space[1]] == 'E':
+            is_exit = True
+        return is_exit
 
 
     def display(self):
@@ -91,7 +142,9 @@ class Maze:
 
         for x, row in enumerate(self._map):
             for y, content in enumerate(row):
-                if self.can_move_to(x, y):
+                if self.can_move_to(x, y) \
+                    and self._player_space != (x,y) \
+                    and content != 'E':
                     empty_spaces.append((x, y))
 
         return empty_spaces
@@ -188,4 +241,11 @@ if __name__ == "__main__":
     print("Random space indexes: x={}, y={}".format(random_space[0],\
         random_space[1]))
     m1.print_maze_content(random_space)
+
+    print("\nTesting: Fill maze with items until no room left...\n")
+
+    while len(m1._empty_spaces) >= 1:
+        m1.add_object_to_maze("I")
+    
+    m1.display()
     
