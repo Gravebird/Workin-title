@@ -1,6 +1,6 @@
 # maze.py
 # Create a class Maze to store the maze map
-# Author: Leo
+# Author: Leo, Bryan
 
 
 import random
