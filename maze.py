@@ -74,8 +74,10 @@ class Maze:
         :rtype: Boolean
         """
         able_to_move = True
+        
         if self._map[row][col] == 'X':
             able_to_move = False
+
         return able_to_move
 
 
@@ -91,8 +93,11 @@ class Maze:
         """
         content = self._map[space[0]][space[1]]
         item_in_space = True
-        if content != ' ' and content != 'P' and content != 'X':
+
+        if content != ' ' and content != 'P' and content != 'X' \
+            and content != 'E':
             item_in_space = False
+
         return item_in_space
 
 
@@ -233,7 +238,7 @@ if __name__ == "__main__":
     print("\nTesting: Fill maze with items until no room left...\n")
 
     while len(m1._empty_spaces) >= 1:
-        m1.add_object_to_maze("O")
+        m1.add_object_to_maze("I")
     
     m1.display()
     
