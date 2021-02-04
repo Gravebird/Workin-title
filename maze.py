@@ -4,17 +4,19 @@
 
 
 import random
+from player import Player
 
 
 class Maze:
-    """ Define the Maze structure of the project
+    """ 
+    Define the Maze structure of the project
+
+    :param filename: File of the maze map's structure
+    :type filename: string
     """
     def __init__(self, filename):
-        """Initialiation
-
-        :param filename: File of the maze map's structure
-        :type filename: string
-
+        """
+        Initialiation of maze instance attributes
         Store the maze map into 2D List (_map)
         """
         mazeList = []
@@ -33,13 +35,16 @@ class Maze:
         self.add_object_to_maze("D")
 
 
-    def can_move_to(self, row, col):
-        """Method to check if a position is empty
+    def can_move_to(self, row:int, col:int):
+        """
+        Method to check if a position is empty
 
         :param row: row number
         :type row: integer
+
         :param col: column number
         :type col: integer
+
         :return: True for empty; False otherwise
         :rtype: Boolean
         """
@@ -49,7 +54,7 @@ class Maze:
         return able_to_move
 
 
-    def is_item(self, space):
+    def is_item(self, space:tuple):
         """
         Checks if the specified space contains an item. It does this by looking
         at the content of the maze array at that location. If it sees X (wall),
@@ -57,7 +62,7 @@ class Maze:
         Any other value in the space counts as an item (may change this later)
 
         :param space: The space to check for an item
-        :type space: A tuple containing two ints (x and y index of the space)
+        :type space: A tuple of 2 integers | X,Y Coordinates
         """
         content = self._map[space[0]][space[1]]
         item_in_space = True
@@ -67,8 +72,7 @@ class Maze:
 
 
     def display(self):
-        """Method to display the map (print)
-        """
+        """Method to display the map (print)"""
         for row in self._map:
             for pos in row:
                 print(pos, end="")
@@ -93,7 +97,7 @@ class Maze:
         return empty_spaces
 
 
-    def remove_from_empty_spaces_list(self, space):
+    def remove_from_empty_spaces_list(self, space:tuple):
         """
         Removes the given space from the list of empty spaces.
         This function is called every time an object is placed in the maze, so
@@ -102,12 +106,12 @@ class Maze:
         definition)
 
         :param space: The space to remove
-        :type space: A tuple containing two ints (x and y index of the space)
+        :type space: A tuple of 2 integers | X,Y Coordinates
         """
         self._empty_spaces.remove(space)
 
     
-    def place_object(self, space, letter):
+    def place_object(self, space:tuple, letter:str):
         """
         This function puts an object in the space given, which must be an empty
         space.
@@ -116,10 +120,10 @@ class Maze:
         likely need to be an actual object in the programming sense of the word.
 
         :param space: The location of the space where the item is to be placed
-        :type space: a tuple containing two ints (x and y index of the space)
+        :type space: A tuple of 2 integers | X,Y Coordinates
 
         :param letter: The letter to be used to represent the object
-        :type letter: str (but only 1 letter)
+        :type letter: str | Max length = 1
 
         :raises ValueError: If more/less than 1 letter is passed in
 
@@ -134,10 +138,13 @@ class Maze:
         self.remove_from_empty_spaces_list(space)
 
 
-    def add_object_to_maze(self, letter):
+    def add_object_to_maze(self, letter:str):
         """
         Adds the specified letter (representing an object in the maze) to the
         maze.
+
+        :param letter: The letter of the item to be added
+        :type letter: str
         """
         space = self.find_random_spot()
         self.place_object(space, letter)
@@ -147,22 +154,21 @@ class Maze:
         """
         Finds a random empty space in the maze. 
 
-        :return: a tuple containing the x and y index values of the randomly
-        selected empty space
-        :rtype: a tuple containing two integers
+        :return: The coordinates of a randomly selected empty space
+        :rtype: A tuple of 2 integers | X,Y Coordinates
         """
         random_index = random.randint(0, len(self._empty_spaces) - 1)
         return self._empty_spaces[random_index]
 
 
-    def print_maze_content(self, space):
+    def print_maze_content(self, space:tuple):
         """
         This function is for testing purposes.
 
         It will print the value stored inside the maze at the designated space.
 
-        :param space: A tuple containing two integers - the x and y indexes of
-        the space to print
+        :param space: The coordinates of the space to be printed
+        :type space: A tuple of 2 integers | X,Y Coordinates
         """
         content = self._map[space[0]][space[1]]
         if content == " ":
@@ -171,6 +177,7 @@ class Maze:
 
 
 ################################
+#General maze class testing.
 if __name__ == "__main__":
     m1 = Maze("maze.txt")
     # result = m1.check(0,3)
