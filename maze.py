@@ -4,6 +4,7 @@
 
 
 import random
+from player import Player
 
 
 class Maze:
@@ -26,11 +27,40 @@ class Maze:
             mazeList.append(list(item)) 
 
         self._map = mazeList
+        self._player = Player()
+        self._player_space = self.find_player_space()
         self._empty_spaces = self.find_empty_spaces()
         self.add_object_to_maze("A")
         self.add_object_to_maze("B")
         self.add_object_to_maze("C")
         self.add_object_to_maze("D")
+
+
+    def find_player_space(self):
+        """
+        Searches the maze for the space that the player is occupying.
+
+        This function is called when the maze is created, and then the maze
+        will track the player as they move, so there is no need to call this
+        function again.
+
+        :return: the space the player is found in
+        :rtype: a tuple of two ints (x and y index of the space)
+
+        :raises Exception: if the player cannot be found
+        """
+        space_of_player = None
+
+        for x, row in enumerate(self._map):
+            for y, content in enumerate(row):
+                if content == 'P':
+                    space_of_player = (x, y)
+                    break
+
+        if space_of_player == None:
+            raise Exception("Could not find player in maze!")
+
+        return space_of_player
 
 
     def can_move_to(self, row, col):
@@ -66,6 +96,22 @@ class Maze:
         return item_in_space
 
 
+    def is_exit(self, space):
+        """
+        Checks if the specified space contains the exit.
+
+        :param space: The space to check
+        :type space: A tuple containing two ints (x and y index of the space)
+
+        :return: true if the space contains the exit, false otherwise
+        :rtype: bool
+        """
+        is_exit = False
+        if self._map[space[0]][space[1]] == 'E':
+            is_exit = True
+        return is_exit
+
+
     def display(self):
         """Method to display the map (print)
         """
@@ -87,7 +133,9 @@ class Maze:
 
         for x, row in enumerate(self._map):
             for y, content in enumerate(row):
-                if self.can_move_to(x, y):
+                if self.can_move_to(x, y) \
+                    and self._player_space != (x,y) \
+                    and content != 'E':
                     empty_spaces.append((x, y))
 
         return empty_spaces
@@ -181,4 +229,11 @@ if __name__ == "__main__":
     print("Random space indexes: x={}, y={}".format(random_space[0],\
         random_space[1]))
     m1.print_maze_content(random_space)
+
+    print("\nTesting: Fill maze with items until no room left...\n")
+
+    while len(m1._empty_spaces) >= 1:
+        m1.add_object_to_maze("O")
+    
+    m1.display()
     
