@@ -1,6 +1,9 @@
 # maze.py
 # Create a class Maze to store the maze map
-# Author: Leo
+# Author: Leo, Bryan
+
+
+import random
 
 
 class Maze:
@@ -23,9 +26,14 @@ class Maze:
             mazeList.append(list(item)) 
 
         self._map = mazeList
+        self._empty_spaces = self.find_empty_spaces()
+        self.add_object_to_maze("A")
+        self.add_object_to_maze("B")
+        self.add_object_to_maze("C")
+        self.add_object_to_maze("D")
 
 
-    def check(self, row, col):
+    def can_move_to(self, row, col):
         """Method to check if a position is empty
 
         :param row: row number
@@ -35,10 +43,27 @@ class Maze:
         :return: True for empty; False otherwise
         :rtype: Boolean
         """
-        if self._map[row][col] == ' ':
-            return True
-        else:
-            return False
+        able_to_move = True
+        if self._map[row][col] == 'X':
+            able_to_move = False
+        return able_to_move
+
+
+    def is_item(self, space):
+        """
+        Checks if the specified space contains an item. It does this by looking
+        at the content of the maze array at that location. If it sees X (wall),
+        P (player), or an empty space it knows that space is not an item.
+        Any other value in the space counts as an item (may change this later)
+
+        :param space: The space to check for an item
+        :type space: A tuple containing two ints (x and y index of the space)
+        """
+        content = self._map[space[0]][space[1]]
+        item_in_space = True
+        if content != ' ' and content != 'P' and content != 'X':
+            item_in_space = False
+        return item_in_space
 
 
     def display(self):
@@ -50,13 +75,99 @@ class Maze:
             print("\n")
 
 
-    def find_random_spot(self):
-        # to be code
-        # FIXME
-        print(len(self._map))       # number of rows
-        print(len(self._map[0]))    # number of columns
-        pass
+    def find_empty_spaces(self):
+        """ 
+        Creates an array containing the x and y position of each empty space in
+        the maze.
 
+        :return: The array of empty spaces
+        :rtype: array of tuples (x and y values)
+        """
+        empty_spaces = []
+
+        for x, row in enumerate(self._map):
+            for y, content in enumerate(row):
+                if self.can_move_to(x, y):
+                    empty_spaces.append((x, y))
+
+        return empty_spaces
+
+
+    def remove_from_empty_spaces_list(self, space):
+        """
+        Removes the given space from the list of empty spaces.
+        This function is called every time an object is placed in the maze, so
+        it should not ever attempt to delete a space that does not exist in the
+        list. If this does happen it will raise a ValueError (from list.remove 
+        definition)
+
+        :param space: The space to remove
+        :type space: A tuple containing two ints (x and y index of the space)
+        """
+        self._empty_spaces.remove(space)
+
+    
+    def place_object(self, space, letter):
+        """
+        This function puts an object in the space given, which must be an empty
+        space.
+
+        For now the object is represented by a letter, but in the future it will
+        likely need to be an actual object in the programming sense of the word.
+
+        :param space: The location of the space where the item is to be placed
+        :type space: a tuple containing two ints (x and y index of the space)
+
+        :param letter: The letter to be used to represent the object
+        :type letter: str (but only 1 letter)
+
+        :raises ValueError: If more/less than 1 letter is passed in
+
+        :raises Exception: If the given space is not empty
+        """
+        if len(letter) != 1:
+            raise ValueError("Can only add 1 letter to the maze as an object!")
+        if self.can_move_to(space[0], space[1]) == False:
+            raise Exception("Cannot add an object to a non-empty space!")
+
+        self._map[space[0]][space[1]] = letter
+        self.remove_from_empty_spaces_list(space)
+
+
+    def add_object_to_maze(self, letter):
+        """
+        Adds the specified letter (representing an object in the maze) to the
+        maze.
+        """
+        space = self.find_random_spot()
+        self.place_object(space, letter)
+
+
+    def find_random_spot(self):
+        """
+        Finds a random empty space in the maze. 
+
+        :return: a tuple containing the x and y index values of the randomly
+        selected empty space
+        :rtype: a tuple containing two integers
+        """
+        random_index = random.randint(0, len(self._empty_spaces) - 1)
+        return self._empty_spaces[random_index]
+
+
+    def print_maze_content(self, space):
+        """
+        This function is for testing purposes.
+
+        It will print the value stored inside the maze at the designated space.
+
+        :param space: A tuple containing two integers - the x and y indexes of
+        the space to print
+        """
+        content = self._map[space[0]][space[1]]
+        if content == " ":
+            content = "Empty"
+        print("Content of space: {}".format(content))
 
 
 ################################
@@ -65,4 +176,9 @@ if __name__ == "__main__":
     # result = m1.check(0,3)
     # print(result)
     m1.display()
-    m1.find_random_spot()
+
+    random_space = m1.find_random_spot()
+    print("Random space indexes: x={}, y={}".format(random_space[0],\
+        random_space[1]))
+    m1.print_maze_content(random_space)
+    
