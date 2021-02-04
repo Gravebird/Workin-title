@@ -30,6 +30,7 @@ class Maze:
         self._player = Player()
         self._player_space = self.find_player_space()
         self._empty_spaces = self.find_empty_spaces()
+        
         self.add_object_to_maze("A")
         self.add_object_to_maze("B")
         self.add_object_to_maze("C")
@@ -74,7 +75,7 @@ class Maze:
         :rtype: Boolean
         """
         able_to_move = True
-        
+
         if self._map[row][col] == 'X':
             able_to_move = False
 
