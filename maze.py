@@ -27,9 +27,13 @@ class Maze:
 
         self._map = mazeList
         self._empty_spaces = self.find_empty_spaces()
+        self.add_object_to_maze("A")
+        self.add_object_to_maze("B")
+        self.add_object_to_maze("C")
+        self.add_object_to_maze("D")
 
 
-    def check(self, row, col):
+    def can_move_to(self, row, col):
         """Method to check if a position is empty
 
         :param row: row number
@@ -39,10 +43,27 @@ class Maze:
         :return: True for empty; False otherwise
         :rtype: Boolean
         """
-        if self._map[row][col] == ' ':
-            return True
-        else:
-            return False
+        able_to_move = True
+        if self._map[row][col] == 'X':
+            able_to_move = False
+        return able_to_move
+
+
+    def is_item(self, space):
+        """
+        Checks if the specified space contains an item. It does this by looking
+        at the content of the maze array at that location. If it sees X (wall),
+        P (player), or an empty space it knows that space is not an item.
+        Any other value in the space counts as an item (may change this later)
+
+        :param space: The space to check for an item
+        :type space: A tuple containing two ints (x and y index of the space)
+        """
+        content = self._map[space[0]][space[1]]
+        item_in_space = True
+        if content != ' ' and content != 'P' and content != 'X':
+            item_in_space = False
+        return item_in_space
 
 
     def display(self):
@@ -66,10 +87,60 @@ class Maze:
 
         for x, row in enumerate(self._map):
             for y, content in enumerate(row):
-                if self.check(x, y):
+                if self.can_move_to(x, y):
                     empty_spaces.append((x, y))
 
         return empty_spaces
+
+
+    def remove_from_empty_spaces_list(self, space):
+        """
+        Removes the given space from the list of empty spaces.
+        This function is called every time an object is placed in the maze, so
+        it should not ever attempt to delete a space that does not exist in the
+        list. If this does happen it will raise a ValueError (from list.remove 
+        definition)
+
+        :param space: The space to remove
+        :type space: A tuple containing two ints (x and y index of the space)
+        """
+        self._empty_spaces.remove(space)
+
+    
+    def place_object(self, space, letter):
+        """
+        This function puts an object in the space given, which must be an empty
+        space.
+
+        For now the object is represented by a letter, but in the future it will
+        likely need to be an actual object in the programming sense of the word.
+
+        :param space: The location of the space where the item is to be placed
+        :type space: a tuple containing two ints (x and y index of the space)
+
+        :param letter: The letter to be used to represent the object
+        :type letter: str (but only 1 letter)
+
+        :raises ValueError: If more/less than 1 letter is passed in
+
+        :raises Exception: If the given space is not empty
+        """
+        if len(letter) != 1:
+            raise ValueError("Can only add 1 letter to the maze as an object!")
+        if self.can_move_to(space[0], space[1]) == False:
+            raise Exception("Cannot add an object to a non-empty space!")
+
+        self._map[space[0]][space[1]] = letter
+        self.remove_from_empty_spaces_list(space)
+
+
+    def add_object_to_maze(self, letter):
+        """
+        Adds the specified letter (representing an object in the maze) to the
+        maze.
+        """
+        space = self.find_random_spot()
+        self.place_object(space, letter)
 
 
     def find_random_spot(self):
