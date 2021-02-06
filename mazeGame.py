@@ -15,7 +15,7 @@ m1 = Maze("maze.txt")
 
 
 def move_player(direction: str, Px: int, Py: int)-> tuple:
-    """[summary]
+    """Move the player by user's input (ASWD)
 
     :param direction: 4 directions (ASWD) that the player moves
     :type direction: str
