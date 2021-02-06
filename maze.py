@@ -42,6 +42,10 @@ class Maze:
     def map(self):
         return self._map
 
+    @map.setter
+    def map(self, x, y, value):
+        self._map[x][y] = value
+
     @property
     def player(self):
         return self._player
