@@ -18,3 +18,7 @@ class Player:
     @property
     def backpack(self):
         return self._backpack
+    
+    @backpack.setter
+    def backpack(self, item):
+        self._backpack.append(item)

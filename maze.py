@@ -38,6 +38,15 @@ class Maze:
         self.add_object_to_maze("D")
 
 
+    @property
+    def map(self):
+        return self._map
+
+    @property
+    def player(self):
+        return self._player
+
+    
     def find_player_space(self):
         """
         Searches the maze for the space that the player is occupying.
@@ -88,7 +97,7 @@ class Maze:
     def is_item(self, space:tuple):
         """
         Checks if the specified space contains an item. 
-        It does this by lookingat the content of the maze array at that location.
+        It does this by looking at the content of the maze array at that location.
         If it sees X (wall), P (player), or an empty space it knows that space
         is not an item.Any other value in the space counts as an item 
         (may change this later)
@@ -97,11 +106,11 @@ class Maze:
         :type space: A tuple of 2 integers | X,Y Coordinates
         """
         content = self._map[space[0]][space[1]]
-        item_in_space = True
+        item_in_space = False
 
         if content != ' ' and content != 'P' and content != 'X' \
             and content != 'E':
-            item_in_space = False
+            item_in_space = True
 
         return item_in_space
 
