@@ -59,13 +59,8 @@ while (m1.is_exit((Px, Py)) == False) or (len(m1.player.backpack) < 4):
         m1.player.backpack = m1.map[Px][Py]
         m1.map[Px][Py] = " "
 
+    
     # For test only
     print(m1.player.backpack)
     m1.display() 
     # For test only
-
-
-
-# function move_player:    
-# FIXME: Px, Py may get out of range, 
-# may need to update .can_move_to() - Leo 2/4/21

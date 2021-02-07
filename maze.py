@@ -91,7 +91,13 @@ class Maze:
         :rtype: Boolean
         """
         able_to_move = True
-
+        # Check if out of grid
+        if row < 0 or col < 0:
+            return False
+        if (row > len(self._map) - 1) or (col > len(self._map[0]) - 1):
+            return False
+        
+        # Check if it is a wall
         if self._map[row][col] == 'X':
             able_to_move = False
 
