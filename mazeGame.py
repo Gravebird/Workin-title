@@ -60,7 +60,12 @@ while (m1.is_exit((Px, Py)) == False) or (len(m1.player.backpack) < 4):
         m1.map[Px][Py] = " "
 
     
+    (width, height) = (1000, 600)
+    screen =pygame.display.set_mode((width, height))
+    pygame.display.flip()
     # For test only
     print(m1.player.backpack)
-    m1.display() 
+    m1.display(screen) 
+    m1.tile_print(Py, Px,"player",screen)
+    pygame.display.flip()
     # For test only
