@@ -8,6 +8,7 @@
 
 
 from maze import Maze
+import pygame
 
 m1 = Maze("maze.txt")
 
