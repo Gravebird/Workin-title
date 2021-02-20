@@ -4,6 +4,7 @@
 
 
 import random
+import pygame
 from player import Player
 
 
@@ -141,12 +142,58 @@ class Maze:
         return is_exit
 
 
-    def display(self):
-        """Method to display the map (print)"""
+    def display(self,screen):
+        """
+        Method to display the map (print) and calles the tile printing menthod
+        """
+        level = 0
+        
         for row in self._map:
+            spot = 0
             for pos in row:
                 print(pos, end="")
+                self.tile_print(spot, level, pos, screen)
+                spot += 1
+            level += 1
             print("\n")
+        pygame.display.flip()
+
+    def tile_print(self,x, y,type_e,screen_s):
+        """
+        this method blits and loads all the images. 
+        will be made a class at a later date
+        """
+        pix = 40
+        tree = pygame.image.load('images/trees.png')
+        walktile = pygame.image.load('images/walkintile.png')
+        pllayer = pygame.image.load('images/cathorse.png')
+        exit_maze = pygame.image.load('images/boxcat.png')
+        entry = pygame.image.load('images/holein.png')
+        item1 = pygame.image.load('images/birds1.png')
+        item2 = pygame.image.load('images/birds2.png')
+        item3 = pygame.image.load('images/fatbird3.png')
+        item4 = pygame.image.load('images/pinkbird.png')
+
+        if type_e == 'X':
+            screen_s.blit(pygame.transform.smoothscale(tree, (pix,pix)), (x *pix, y * pix))
+        elif type_e ==' ':
+            screen_s.blit(pygame.transform.smoothscale(walktile, (pix,pix)), (x *pix, y * pix))
+        elif type_e == "player":
+            screen_s.blit(pygame.transform.smoothscale(pllayer, (pix,pix)), ((x *pix), (y * pix)))
+        elif type_e == 'E':
+            screen_s.blit(pygame.transform.smoothscale(exit_maze, (pix,pix)), ((x *pix), (y * pix)))
+        elif type_e == "A":
+            screen_s.blit(pygame.transform.smoothscale(item1, (pix,pix)), ((x *pix), (y * pix)))
+        elif type_e == "B":
+            screen_s.blit(pygame.transform.smoothscale(item2, (pix,pix)), ((x *pix), (y * pix)))
+        elif type_e == "C":
+            screen_s.blit(pygame.transform.smoothscale(item3, (pix,pix)), ((x *pix), (y * pix)))
+        elif type_e == "D":
+            screen_s.blit(pygame.transform.smoothscale(item4, (pix,pix)), ((x *pix), (y * pix)))
+        elif type_e == "P":
+            screen_s.blit(pygame.transform.smoothscale(entry, (pix,pix)), ((x *pix), (y * pix)))
+
+
 
 
     def find_empty_spaces(self):
