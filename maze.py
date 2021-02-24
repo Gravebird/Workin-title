@@ -164,35 +164,34 @@ class Maze:
         will be made a class at a later date
         """
         pix = 40
-        tree = pygame.image.load('images/trees.png')
-        walktile = pygame.image.load('images/walkintile.png')
-        pllayer = pygame.image.load('images/cathorse.png')
-        exit_maze = pygame.image.load('images/boxcat.png')
-        entry = pygame.image.load('images/holein.png')
-        item1 = pygame.image.load('images/birds1.png')
-        item2 = pygame.image.load('images/birds2.png')
-        item3 = pygame.image.load('images/fatbird3.png')
-        item4 = pygame.image.load('images/pinkbird.png')
 
         if type_e == 'X':
+            tree = pygame.image.load('images/trees.png')
             screen_s.blit(pygame.transform.smoothscale(tree, (pix,pix)), (x *pix, y * pix))
         elif type_e ==' ':
+            walktile = pygame.image.load('images/walkintile.png')
             screen_s.blit(pygame.transform.smoothscale(walktile, (pix,pix)), (x *pix, y * pix))
         elif type_e == "player":
+            pllayer = pygame.image.load('images/cathorse.png')
             screen_s.blit(pygame.transform.smoothscale(pllayer, (pix,pix)), ((x *pix), (y * pix)))
         elif type_e == 'E':
+            exit_maze = pygame.image.load('images/boxcat.png')
             screen_s.blit(pygame.transform.smoothscale(exit_maze, (pix,pix)), ((x *pix), (y * pix)))
         elif type_e == "A":
+            item1 = pygame.image.load('images/birds1.png')
             screen_s.blit(pygame.transform.smoothscale(item1, (pix,pix)), ((x *pix), (y * pix)))
         elif type_e == "B":
+            item2 = pygame.image.load('images/birds2.png')
             screen_s.blit(pygame.transform.smoothscale(item2, (pix,pix)), ((x *pix), (y * pix)))
         elif type_e == "C":
+            item3 = pygame.image.load('images/fatbird3.png')
             screen_s.blit(pygame.transform.smoothscale(item3, (pix,pix)), ((x *pix), (y * pix)))
         elif type_e == "D":
+            item4 = pygame.image.load('images/pinkbird.png')
             screen_s.blit(pygame.transform.smoothscale(item4, (pix,pix)), ((x *pix), (y * pix)))
         elif type_e == "P":
+            entry = pygame.image.load('images/holein.png')
             screen_s.blit(pygame.transform.smoothscale(entry, (pix,pix)), ((x *pix), (y * pix)))
-
 
 
 
