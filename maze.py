@@ -144,7 +144,13 @@ class Maze:
 
     def display(self,screen):
         """
-        Method to display the map (print) and calles the tile printing menthod
+        Method to display the map (print) and calls the tile printing menthod
+        
+        :param screen: the scren that will be blit to in tile_print
+        :type screen: pygame display surface
+        
+        level: tracks the y coordiante of the tile
+        spot: tracks the y coordinate of tile
         """
         level = 0
         
@@ -162,6 +168,20 @@ class Maze:
         """
         this method blits and loads all the images. 
         will be made a class at a later date
+        
+        :param x: x coordinate of tile
+        :type x: int
+        
+        :param y: y coordinate of tile
+        :type y: int 
+        
+        :param type_e: the kind of type to be displayed
+        :type type_e: str
+        
+        :param screen_s: the screen surface to be drawn to
+        :type screen_s: pygame display surface
+        
+        pix can be used to adjust the size of each tile.
         """
         pix = 40
 
