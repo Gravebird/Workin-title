@@ -27,22 +27,22 @@ def move_player(direction: str, Px: int, Py: int)-> tuple:
     :rtype: turple
     """
     # Move up (w)
-    if input_direction == "w":
+    if direction == "w":
         if m1.can_move_to(Px - 1, Py) == True:
             Px -= 1
             print(Px, Py) # new coordinate
     # Move down (s)
-    if input_direction == "s":
+    if direction == "s":
         if m1.can_move_to(Px + 1, Py) == True:
             Px += 1
             print(Px, Py) # new coordinate
     # Move left (a)
-    if input_direction == "a":
+    if direction == "a":
         if m1.can_move_to(Px, Py -1) == True:
             Py -= 1
             print(Px, Py) # new coordinate
     # Move right (d)
-    if input_direction == "d":
+    if direction == "d":
         if m1.can_move_to(Px, Py + 1) == True:
             Py += 1
             print(Px, Py) # new coordinate
