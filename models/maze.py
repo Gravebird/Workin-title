@@ -5,7 +5,7 @@
 
 import random
 import pygame
-from player import Player
+from models.player import Player
 
 
 class Maze:
@@ -31,6 +31,7 @@ class Maze:
         self._map = mazeList
         self._player = Player()
         self._player_space = self.find_player_space()
+        self._exit_space = self.find_exit()
         self._empty_spaces = self.find_empty_spaces()
         
         self.add_object_to_maze("A")
@@ -50,6 +51,30 @@ class Maze:
     @property
     def player(self):
         return self._player
+
+    @property
+    def player_space(self):
+        return self._player_space
+
+    @player_space.setter
+    def player_space(self, new_space: tuple):
+        """
+        Updates the maze map and player_space variable with the new player space
+        """
+        (old_x, old_y) = self._player_space
+        self._map[old_x][old_y] = " "
+        self._player_space = new_space
+        self._map[new_space[0]][new_space[1]] = "P"
+    
+
+    def is_player_at_exit(self):
+        """
+        A simple check to see if the player is at the exit.
+
+        :return: If the player is at the exit
+        :rtype: bool
+        """
+        return self._player_space == self._exit_space
 
     
     def find_player_space(self):
@@ -75,8 +100,21 @@ class Maze:
 
         if space_of_player == None:
             raise Exception("Could not find player in maze!")
-
         return space_of_player
+    
+
+    def find_exit(self):
+        """
+        This function searches the maze for the exit and returns its space.
+        """
+        space_of_exit = None
+        for x, row in enumerate(self._map):
+            for y, content in enumerate(row):
+                if content == 'E':
+                    space_of_exit = (x, y)
+                    break
+        print(space_of_exit)
+        return space_of_exit    
 
 
     def can_move_to(self, row, col):
@@ -140,79 +178,6 @@ class Maze:
         if self._map[space[0]][space[1]] == 'E':
             is_exit = True
         return is_exit
-
-
-    def display(self,screen):
-        """
-        Method to display the map (print) and calls the tile printing menthod
-        
-        :param screen: the scren that will be blit to in tile_print
-        :type screen: pygame display surface
-        
-        level: tracks the y coordiante of the tile
-        spot: tracks the y coordinate of tile
-        """
-        level = 0
-        
-        for row in self._map:
-            spot = 0
-            for pos in row:
-                print(pos, end="")
-                self.tile_print(spot, level, pos, screen)
-                spot += 1
-            level += 1
-            print("\n")
-        pygame.display.flip()
-
-    def tile_print(self,x, y,type_e,screen_s):
-        """
-        this method blits and loads all the images. 
-        will be made a class at a later date
-        
-        :param x: x coordinate of tile
-        :type x: int
-        
-        :param y: y coordinate of tile
-        :type y: int 
-        
-        :param type_e: the kind of type to be displayed
-        :type type_e: str
-        
-        :param screen_s: the screen surface to be drawn to
-        :type screen_s: pygame display surface
-        
-        pix can be used to adjust the size of each tile.
-        """
-        pix = 40
-
-        if type_e == 'X':
-            tree = pygame.image.load('images/trees.png')
-            screen_s.blit(pygame.transform.smoothscale(tree, (pix,pix)), (x *pix, y * pix))
-        elif type_e ==' ':
-            walktile = pygame.image.load('images/walkintile.png')
-            screen_s.blit(pygame.transform.smoothscale(walktile, (pix,pix)), (x *pix, y * pix))
-        elif type_e == "player":
-            pllayer = pygame.image.load('images/cathorse.png')
-            screen_s.blit(pygame.transform.smoothscale(pllayer, (pix,pix)), ((x *pix), (y * pix)))
-        elif type_e == 'E':
-            exit_maze = pygame.image.load('images/boxcat.png')
-            screen_s.blit(pygame.transform.smoothscale(exit_maze, (pix,pix)), ((x *pix), (y * pix)))
-        elif type_e == "A":
-            item1 = pygame.image.load('images/birds1.png')
-            screen_s.blit(pygame.transform.smoothscale(item1, (pix,pix)), ((x *pix), (y * pix)))
-        elif type_e == "B":
-            item2 = pygame.image.load('images/birds2.png')
-            screen_s.blit(pygame.transform.smoothscale(item2, (pix,pix)), ((x *pix), (y * pix)))
-        elif type_e == "C":
-            item3 = pygame.image.load('images/fatbird3.png')
-            screen_s.blit(pygame.transform.smoothscale(item3, (pix,pix)), ((x *pix), (y * pix)))
-        elif type_e == "D":
-            item4 = pygame.image.load('images/pinkbird.png')
-            screen_s.blit(pygame.transform.smoothscale(item4, (pix,pix)), ((x *pix), (y * pix)))
-        elif type_e == "P":
-            entry = pygame.image.load('images/holein.png')
-            screen_s.blit(pygame.transform.smoothscale(entry, (pix,pix)), ((x *pix), (y * pix)))
-
 
 
     def find_empty_spaces(self):
@@ -313,7 +278,7 @@ class Maze:
             content = "Empty"
         print("Content of space: {}".format(content))
 
-
+"""
 ################################
 #General maze class testing.
 if __name__ == "__main__":
@@ -334,3 +299,4 @@ if __name__ == "__main__":
     
     m1.display()
     
+"""
