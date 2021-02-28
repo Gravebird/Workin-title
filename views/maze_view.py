@@ -83,7 +83,7 @@ class MazeView:
             item4 = pygame.image.load('images/pinkbird.png')
             screen_s.blit(pygame.transform.smoothscale(item4, (pix,pix)), ((x *pix), (y * pix)))
 
-        if self._entry[0] == x and self._entry[1] == y:
+        if self._entry[0] == y and self._entry[1] == x:
             entry = pygame.image.load('images/holein.png')
             screen_s.blit(pygame.transform.smoothscale(entry, (pix,pix)), ((x *pix), (y * pix)))
         
