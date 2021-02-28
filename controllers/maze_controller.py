@@ -30,29 +30,32 @@ class MazeController:
         framerate = 10
 
         while not self._maze.is_player_at_exit():
-            clock.tick(framerate)
+            #clock.tick(framerate)
             self._view.display(self._maze)
+            waiting_for_input = True
 
-            if input_timer == 0:
-                keys = pygame.key.get_pressed()
-                input_direction = self.get_input(keys)
+            while waiting_for_input:
+                clock.tick(framerate)
 
-                if input_direction != None:
-                    input_timer = framerate
-                    (Px, Py) = self._maze.player_space
-                    (Px, Py) = self.move_player(input_direction, Px, Py)
+                if input_timer <= 0:
+                    keys = pygame.key.get_pressed()
+                    input_direction = self.get_input(keys)
 
-                    if self._maze.is_item((Px, Py)):
-                        self._maze.player.backpack = self._maze.map[Px][Py]
+                    if input_direction != None:
+                        waiting_for_input = False
+                        input_timer = framerate
+                        (Px, Py) = self._maze.player_space
+                        (Px, Py) = self.move_player(input_direction, Px, Py)
 
-                    self._maze.player_space = (Px, Py)
+                        if self._maze.is_item((Px, Py)):
+                            self._maze.player.backpack = self._maze.map[Px][Py]
 
-            ##################################
-                print(f"Backpack contains: {self._maze.player.backpack}")
-            
-            if input_timer > 0:
-                input_timer -= 1
-        
+                        self._maze.player_space = (Px, Py)
+                else:
+                    input_timer -= 1
+                
+                pygame.event.pump()
+
         ### Player has reached the end of the maze ###
 
         if (len(self._maze.player.backpack) < 4):

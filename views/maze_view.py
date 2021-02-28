@@ -90,12 +90,3 @@ class MazeView:
         if type_e == "P":
             pllayer = pygame.image.load('images/cathorse.png')
             screen_s.blit(pygame.transform.smoothscale(pllayer, (pix,pix)), ((x *pix), (y * pix)))
-        """    
-
-        I was having trouble with getting the hole to stay after the player moved.
-        Commented it out for now, we can figure this out later... - Bryan, Feb 27
-
-        elif type_e == "S":
-            entry = pygame.image.load('images/holein.png')
-            screen_s.blit(pygame.transform.smoothscale(entry, (pix,pix)), ((x *pix), (y * pix)))
-        """
