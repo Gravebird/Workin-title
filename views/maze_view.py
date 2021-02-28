@@ -10,12 +10,15 @@ class MazeView:
 
     :param _height: The height of the GUI
     :type _height: int
+
+    :param start_pos: The space where the player starts
+    :type start_pos: A tuple | X Y coordinates
     """
-    def __init__(self):
+    def __init__(self, start_pos: tuple):
         self._width = 1000
         self._height = 600
         self._screen = pygame.display.set_mode((self._width, self._height))
-        self.tile_print(0, 0, "player", self._screen)
+        self._entry = start_pos
         pygame.display.flip()
 
     
@@ -61,7 +64,7 @@ class MazeView:
         if type_e == 'X':
             tree = pygame.image.load('images/trees.png')
             screen_s.blit(pygame.transform.smoothscale(tree, (pix,pix)), (x *pix, y * pix))
-        elif type_e ==' ':
+        elif type_e ==' ' or type_e == "P":
             walktile = pygame.image.load('images/walkintile.png')
             screen_s.blit(pygame.transform.smoothscale(walktile, (pix,pix)), (x *pix, y * pix))
         elif type_e == 'E':
@@ -79,13 +82,13 @@ class MazeView:
         elif type_e == "D":
             item4 = pygame.image.load('images/pinkbird.png')
             screen_s.blit(pygame.transform.smoothscale(item4, (pix,pix)), ((x *pix), (y * pix)))
-        elif type_e == "P":
-            pllayer = pygame.image.load('images/cathorse.png')
+
+        if self._entry[0] == x and self._entry[1] == y:
             entry = pygame.image.load('images/holein.png')
-            walktile = pygame.image.load('images/walkintile.png')
-            start_spot = 1
-            screen_s.blit(pygame.transform.smoothscale(walktile, (pix,pix)), (x *pix, y * pix))
-            screen_s.blit(pygame.transform.smoothscale(entry, (pix,pix)), ((start_spot *pix), (start_spot * pix)))
+            screen_s.blit(pygame.transform.smoothscale(entry, (pix,pix)), ((x *pix), (y * pix)))
+        
+        if type_e == "P":
+            pllayer = pygame.image.load('images/cathorse.png')
             screen_s.blit(pygame.transform.smoothscale(pllayer, (pix,pix)), ((x *pix), (y * pix)))
         """    
 
