@@ -1,4 +1,6 @@
 from controllers.maze_controller import MazeController
+from models.maze import Maze
+from views.maze_view import MazeView
 
 class MazeGame:
     """
@@ -8,6 +10,8 @@ class MazeGame:
         pass
 
 
-    def run(self):
-        maze_controller = MazeController()
+    def play_maze(self):
+        maze = Maze("maze.txt")
+        view = MazeView()
+        maze_controller = MazeController(maze, view)
         maze_controller.play_game()

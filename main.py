@@ -10,4 +10,4 @@ from controllers.mazeGame import MazeGame
 
 if __name__ == "__main__":
     maze_game = MazeGame()
-    maze_game.run()
+    maze_game.play_maze()

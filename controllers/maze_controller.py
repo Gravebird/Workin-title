@@ -10,9 +10,13 @@ class MazeController:
 
     :param maze_: the maze model
     :type maze_: Maze Object
+
+    :param view_: The view (GUI) of the maze
+    :type view_: MazeView Object
     """
-    def __init__(self):
-        self._maze = Maze("maze.txt")
+    def __init__(self, maze_, view_):
+        self._maze = maze_
+        self._view = view_
     
 
     def play_game(self):
@@ -20,7 +24,6 @@ class MazeController:
         This function will start the game loop and call for user input, and handle
         game logic.
         """
-        view = MazeView()
         pygame.init()
         clock = pygame.time.Clock()
         input_timer = 0
@@ -28,7 +31,7 @@ class MazeController:
 
         while not self._maze.is_player_at_exit():
             clock.tick(framerate)
-            view.display(self._maze)
+            self._view.display(self._maze)
             keys = pygame.key.get_pressed()
             input_direction = self.get_input(keys)
 
