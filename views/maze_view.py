@@ -81,6 +81,11 @@ class MazeView:
             screen_s.blit(pygame.transform.smoothscale(item4, (pix,pix)), ((x *pix), (y * pix)))
         elif type_e == "P":
             pllayer = pygame.image.load('images/cathorse.png')
+            entry = pygame.image.load('images/holein.png')
+            walktile = pygame.image.load('images/walkintile.png')
+            start_spot = 1
+            screen_s.blit(pygame.transform.smoothscale(walktile, (pix,pix)), (x *pix, y * pix))
+            screen_s.blit(pygame.transform.smoothscale(entry, (pix,pix)), ((start_spot *pix), (start_spot * pix)))
             screen_s.blit(pygame.transform.smoothscale(pllayer, (pix,pix)), ((x *pix), (y * pix)))
         """    
 
