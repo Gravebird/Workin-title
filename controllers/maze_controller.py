@@ -1,5 +1,7 @@
 from models.maze import Maze
 from views.maze_view import MazeView
+import pygame
+import pygame.locals
 
 class MazeController:
     """
@@ -19,20 +21,32 @@ class MazeController:
         game logic.
         """
         view = MazeView()
+        pygame.init()
+        clock = pygame.time.Clock()
+        input_timer = 0
+        framerate = 10
+
         while not self._maze.is_player_at_exit():
+            clock.tick(framerate)
             view.display(self._maze)
-            input_direction = input("Please enter a direction (a/s/w/d): ")
-            
-            (Px, Py) = self._maze.player_space
-            (Px, Py) = self.move_player(input_direction, Px, Py)
+            keys = pygame.key.get_pressed()
+            input_direction = self.get_input(keys)
 
-            if self._maze.is_item((Px, Py)):
-                self._maze.player.backpack = self._maze.map[Px][Py]
+            if input_direction != None and input_timer == 0:
+                input_timer = framerate
+                (Px, Py) = self._maze.player_space
+                (Px, Py) = self.move_player(input_direction, Px, Py)
 
-            self._maze.player_space = (Px, Py)
+                if self._maze.is_item((Px, Py)):
+                    self._maze.player.backpack = self._maze.map[Px][Py]
+
+                self._maze.player_space = (Px, Py)
 
             ##################################
-            print(f"Backpack contains: {self._maze.player.backpack}")
+                print(f"Backpack contains: {self._maze.player.backpack}")
+            
+            if input_timer > 0:
+                input_timer -= 1
         
         ### Player has reached the end of the maze ###
 
@@ -43,6 +57,26 @@ class MazeController:
             # Player wins!
             print("You Win!")
 
+
+    def get_input(self, keys):
+        """
+        Function to check whether a keyboard button was pressed, and return a
+        string reprentation of that button. In this case we are converting to
+        wasd format (Up = w, Left = a, Down = s, Right = d).
+
+        :return: The direction the user inputted
+        :rtype: str (len 1)
+        """
+        dir = None
+        if keys[pygame.locals.K_RIGHT]:
+            dir = "d"
+        elif keys[pygame.locals.K_LEFT]:
+            dir = "a"
+        elif keys[pygame.locals.K_UP]:
+            dir = "w"
+        elif keys[pygame.locals.K_DOWN]:
+            dir = "s"
+        return dir
 
 
     def move_player(self, input_direction: str, Px: int, Py: int)-> tuple:
