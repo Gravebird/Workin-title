@@ -30,11 +30,9 @@ class MazeView:
         for row in maze.map:
             spot = 0
             for pos in row:
-                print(pos, end="")
                 self.tile_print(spot, level, pos, self._screen)
                 spot += 1
             level += 1
-            print("\n")
         
         pygame.display.flip()
     

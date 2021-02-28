@@ -32,18 +32,20 @@ class MazeController:
         while not self._maze.is_player_at_exit():
             clock.tick(framerate)
             self._view.display(self._maze)
-            keys = pygame.key.get_pressed()
-            input_direction = self.get_input(keys)
 
-            if input_direction != None and input_timer == 0:
-                input_timer = framerate
-                (Px, Py) = self._maze.player_space
-                (Px, Py) = self.move_player(input_direction, Px, Py)
+            if input_timer == 0:
+                keys = pygame.key.get_pressed()
+                input_direction = self.get_input(keys)
 
-                if self._maze.is_item((Px, Py)):
-                    self._maze.player.backpack = self._maze.map[Px][Py]
+                if input_direction != None:
+                    input_timer = framerate
+                    (Px, Py) = self._maze.player_space
+                    (Px, Py) = self.move_player(input_direction, Px, Py)
 
-                self._maze.player_space = (Px, Py)
+                    if self._maze.is_item((Px, Py)):
+                        self._maze.player.backpack = self._maze.map[Px][Py]
+
+                    self._maze.player_space = (Px, Py)
 
             ##################################
                 print(f"Backpack contains: {self._maze.player.backpack}")
