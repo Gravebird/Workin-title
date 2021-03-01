@@ -4,7 +4,8 @@
 
 
 import random
-from player import Player
+import pygame
+from models.player import Player
 
 
 class Maze:
@@ -30,6 +31,7 @@ class Maze:
         self._map = mazeList
         self._player = Player()
         self._player_space = self.find_player_space()
+        self._exit_space = self.find_exit()
         self._empty_spaces = self.find_empty_spaces()
         
         self.add_object_to_maze("A")
@@ -49,6 +51,30 @@ class Maze:
     @property
     def player(self):
         return self._player
+
+    @property
+    def player_space(self):
+        return self._player_space
+
+    @player_space.setter
+    def player_space(self, new_space: tuple):
+        """
+        Updates the maze map and player_space variable with the new player space
+        """
+        (old_x, old_y) = self._player_space
+        self._map[old_x][old_y] = " "
+        self._player_space = new_space
+        self._map[new_space[0]][new_space[1]] = "P"
+    
+
+    def is_player_at_exit(self):
+        """
+        A simple check to see if the player is at the exit.
+
+        :return: If the player is at the exit
+        :rtype: bool
+        """
+        return self._player_space == self._exit_space
 
     
     def find_player_space(self):
@@ -74,8 +100,21 @@ class Maze:
 
         if space_of_player == None:
             raise Exception("Could not find player in maze!")
-
         return space_of_player
+    
+
+    def find_exit(self):
+        """
+        This function searches the maze for the exit and returns its space.
+        """
+        space_of_exit = None
+        for x, row in enumerate(self._map):
+            for y, content in enumerate(row):
+                if content == 'E':
+                    space_of_exit = (x, y)
+                    break
+        print(space_of_exit)
+        return space_of_exit    
 
 
     def can_move_to(self, row, col):
@@ -139,14 +178,6 @@ class Maze:
         if self._map[space[0]][space[1]] == 'E':
             is_exit = True
         return is_exit
-
-
-    def display(self):
-        """Method to display the map (print)"""
-        for row in self._map:
-            for pos in row:
-                print(pos, end="")
-            print("\n")
 
 
     def find_empty_spaces(self):
@@ -247,7 +278,7 @@ class Maze:
             content = "Empty"
         print("Content of space: {}".format(content))
 
-
+"""
 ################################
 #General maze class testing.
 if __name__ == "__main__":
@@ -268,3 +299,4 @@ if __name__ == "__main__":
     
     m1.display()
     
+"""
