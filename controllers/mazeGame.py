@@ -11,6 +11,7 @@ class MazeGame:
 
 
     def play_maze(self):
+        """Runs the game"""
         maze = Maze("maze.txt")
         start_pos = maze.player_space
         view = MazeView(start_pos)
