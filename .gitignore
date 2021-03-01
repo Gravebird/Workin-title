@@ -2,5 +2,5 @@
 /__virtualEnv
 /__pycache__
 /controllers/__pycache__
-/images/__pycache__
+/models/__pycache__
 /views/__pycache__
