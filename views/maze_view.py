@@ -62,31 +62,40 @@ class MazeView:
         pix = 40
 
         if type_e == 'X':
+            #Loads the walls
             tree = pygame.image.load('images/trees.png')
             screen_s.blit(pygame.transform.smoothscale(tree, (pix,pix)), (x *pix, y * pix))
         elif type_e ==' ' or type_e == "P":
+            #Loads walkable tiles
             walktile = pygame.image.load('images/walkintile.png')
             screen_s.blit(pygame.transform.smoothscale(walktile, (pix,pix)), (x *pix, y * pix))
         elif type_e == 'E':
+            #Loads the exit
             exit_maze = pygame.image.load('images/boxcat.png')
             screen_s.blit(pygame.transform.smoothscale(exit_maze, (pix,pix)), ((x *pix), (y * pix)))
         elif type_e == "A":
+            #Load Item1
             item1 = pygame.image.load('images/birds1.png')
             screen_s.blit(pygame.transform.smoothscale(item1, (pix,pix)), ((x *pix), (y * pix)))
         elif type_e == "B":
+            #Load Item2
             item2 = pygame.image.load('images/birds2.png')
             screen_s.blit(pygame.transform.smoothscale(item2, (pix,pix)), ((x *pix), (y * pix)))
         elif type_e == "C":
+            #Load Item3
             item3 = pygame.image.load('images/fatbird3.png')
             screen_s.blit(pygame.transform.smoothscale(item3, (pix,pix)), ((x *pix), (y * pix)))
         elif type_e == "D":
+            #Load Item4
             item4 = pygame.image.load('images/pinkbird.png')
             screen_s.blit(pygame.transform.smoothscale(item4, (pix,pix)), ((x *pix), (y * pix)))
 
         if self._entry[0] == y and self._entry[1] == x:
+            #Load the entrance
             entry = pygame.image.load('images/holein.png')
             screen_s.blit(pygame.transform.smoothscale(entry, (pix,pix)), ((x *pix), (y * pix)))
         
         if type_e == "P":
-            pllayer = pygame.image.load('images/cathorse.png')
+            #Load the player
+            pllayer = pygame.image.load('images/cathorse.png') #Cathorse.
             screen_s.blit(pygame.transform.smoothscale(pllayer, (pix,pix)), ((x *pix), (y * pix)))
