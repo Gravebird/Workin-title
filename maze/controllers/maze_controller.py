@@ -1,3 +1,7 @@
+# maze_controller.py
+# Primary controller for the maze.
+# Author: Xavier, Leo, Jennie, Bryan, Tiras
+
 from models.maze import Maze
 from views.maze_view import MazeView
 import pygame
@@ -44,6 +48,7 @@ class MazeController:
                 input_direction = self.get_input(keys)
                 #If the input is none, check to see if the previous input wasn't
                 #If there's a current input, begin the countdown to move.
+
                 if input_timer <= 0 or input_direction == None:
                     #Check if current input is same as previous input, but not None
                     if input_direction != None and previous_input == input_direction:
@@ -121,9 +126,6 @@ class MazeController:
 
         :param Py: column of the Player's current location
         :type Py: int
-
-        :return: row and column (x,y coordiantes) of the Player's most updated location
-        :rtype: None
         """
         # Move up (w)
         if input_direction == "w":

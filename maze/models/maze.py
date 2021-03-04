@@ -118,16 +118,17 @@ class Maze:
 
 
     def can_move_to(self, row, col):
-        """Method to check if a position is empty
+        """
+        Method to check if a position is empty
 
-        :param row: row number
+        :param row: Row number
         :type row: integer
 
-        :param col: column number
+        :param col: Column number
         :type col: integer
 
         :return: True for empty; False otherwise
-        :rtype: Boolean
+        :rtype: boolean
         """
         able_to_move = True
         # Check if out of grid
@@ -169,7 +170,7 @@ class Maze:
         Checks if the specified space contains the exit.
 
         :param space: The space to check
-        :type space: A tuple containing two ints (x and y index of the space)
+        :type space: A tuple of 2 integers | X,Y Coordinates
 
         :return: true if the space contains the exit, false otherwise
         :rtype: bool
@@ -186,7 +187,7 @@ class Maze:
         the maze.
 
         :return: The array of empty spaces
-        :rtype: array of tuples (x and y values)
+        :rtype: array of tuples of 2 integers | X,Y Coordinates
         """
         empty_spaces = []
 

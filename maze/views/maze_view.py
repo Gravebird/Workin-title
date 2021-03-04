@@ -1,3 +1,7 @@
+# maze_view.py
+# Viewport controller for the maze.
+# Author: Xavier, Bryan
+
 from models.maze import Maze
 import pygame
 

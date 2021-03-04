@@ -9,5 +9,6 @@
 from controllers.mazeGame import MazeGame
 
 if __name__ == "__main__":
+    #This creates the game instance and runs it.
     maze_game = MazeGame()
     maze_game.play_maze()

@@ -1,3 +1,4 @@
+![Horse Cat Image] (/maze/images/cathorse.png)
 # Workin-title
 A maze game called [WORKIN' TITLE]. Made for ACIT-2515 as a final project.
 
@@ -15,14 +16,20 @@ Controllers:
 
 # Dependencies
 pygame==2.0.0
-
+These can also be installed using the requirements.txt file provided.
 
 # How to run
-python main.py
+The maze game can be easily run by running the main.py program.
+In the maze directory, use:
+`python main.py`
 
 
 # How to control
-User can control the momvent of the player by using either arrow keys or ASWD keys. The goal is to collect all 4 items in the maze.
+User can control the momvent of the player by using either arrow keys or WASD keys. 
+By holding down a key, the player will move once every second.
+By tapping a key, the player will move each press.
+
+The goal is to collect all 4 items in the maze.
 
 
 # AOB (Any Other Business)
