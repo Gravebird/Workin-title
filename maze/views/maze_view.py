@@ -15,8 +15,8 @@ class MazeView:
     :type start_pos: A tuple | X Y coordinates
     """
     def __init__(self, start_pos: tuple):
-        self._width = 1000
-        self._height = 600
+        self._width = 720
+        self._height = 440
         self._screen = pygame.display.set_mode((self._width, self._height))
         self._entry = start_pos
         pygame.display.flip()
