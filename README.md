@@ -1,4 +1,4 @@
-![Horse Cat Image] (/maze/images/cathorse.png)
+![Horse Cat Image](https://raw.githubusercontent.com/UnknownTy/Workin-title/main/maze/images/cathorse.png?token=AGO7Q3W3G4QCNF323AC5LN3AIB2LS)
 # Workin-title
 A maze game called [WORKIN' TITLE]. Made for ACIT-2515 as a final project.
 
