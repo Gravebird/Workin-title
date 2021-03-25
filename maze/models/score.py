@@ -35,12 +35,19 @@ class Score:
         return self._date
 
 
-    def from_json(self, json_str):
+    def from_json(json_str):
+        # self._player_name = json_str
+        # self._score = 
+        # self._date = 
+        
+        # return self
         pass
 
+    def from_dict(score_dict):
+        NewScore = Score(score_dict["name"], score_dict["score"])
+        NewScore._date = score_dict["datetime"]
 
-    def from_dict(self, dict):
-        pass
+        return NewScore
 
 
     def to_dict(self):
@@ -64,9 +71,21 @@ class Score:
 if __name__ == "__main__":
     S1 = Score("Name1", 100)
     
-    print(S1.player_name)
-    print(S1.score)
-    print(S1.date)
+    # print(S1.player_name)
+    # print(S1.score)
+    # print(S1.date)
 
-    print(S1.to_dict())
-    print((S1.to_json()))
+    # print(S1.to_dict())
+    # print((S1.to_json()))
+
+    ## Test from_dict ##
+    score = {
+            "name": "Leo",
+            "score": 112,
+            "datetime": '2021/01/01 12:13:14'
+    }
+    new = Score.from_dict(score)
+    
+    print(new.player_name)
+    print(new.score)
+    print(new.date)
