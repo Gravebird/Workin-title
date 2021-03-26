@@ -4,7 +4,7 @@
 
 
 from datetime import datetime
-
+import json
 
 class Score:
     """Class Score to save player's score
@@ -15,6 +15,8 @@ class Score:
     :type score_: int
     """
     def __init__(self, player_name_, score_):
+        """self._date: get the current date & time
+        """
         self._player_name = player_name_
         self._score = score_
         self._date = datetime.now().strftime("%Y/%m/%d %H:%M:%S")
@@ -36,14 +38,24 @@ class Score:
 
 
     def from_json(json_str):
-        # self._player_name = json_str
-        # self._score = 
-        # self._date = 
-        
-        # return self
-        pass
+        """Convert JSON string into Score object
+
+        :param json_str: JSON string
+        :type json_str: str
+        :return: Score object
+        :rtype: Score
+        """
+        return Score.from_dict(json.loads(json_str))
+
 
     def from_dict(score_dict):
+        """Convert dictionary into Score object
+
+        :param score_dict: dictionary representation of Score
+        :type score_dict: dict
+        :return: Score object
+        :rtype: Score
+        """
         NewScore = Score(score_dict["name"], score_dict["score"])
         NewScore._date = score_dict["datetime"]
 
@@ -51,6 +63,11 @@ class Score:
 
 
     def to_dict(self):
+        """Convert Score object into dict
+
+        :return: A dictionarly contains Score's attributes
+        :rtype: dict
+        """
         PlayerScore_dict = {
             "name": self.player_name,
             "score": self.score,
@@ -61,10 +78,12 @@ class Score:
 
 
     def to_json(self):
-        arr = []
-        arr.append(self.to_dict())
-        
-        return arr
+        """Convert dict into JSON
+
+        :return: JSON String
+        :rtype: str
+        """
+        return json.dumps(self.to_dict())
 
 
 ##################################################
@@ -75,17 +94,25 @@ if __name__ == "__main__":
     # print(S1.score)
     # print(S1.date)
 
+    ### Test to_dict, to_jsont ###
     # print(S1.to_dict())
     # print((S1.to_json()))
 
-    ## Test from_dict ##
-    score = {
-            "name": "Leo",
-            "score": 112,
-            "datetime": '2021/01/01 12:13:14'
-    }
-    new = Score.from_dict(score)
+
+    ### Test from_dict ###
+    # score = {
+    #         "name": "Leo",
+    #         "score": 112,
+    #         "datetime": '2021/01/01 12:13:14'
+    # }
+    # new = Score.from_dict(score)
     
-    print(new.player_name)
-    print(new.score)
-    print(new.date)
+    # print(new.player_name)
+    # print(new.score)
+    # print(new.date)
+
+    ### Test from_json ###
+    # JSON_STR = '{"name": "Tony", "score": 1990, "datetime": "2021/03/26 00:16:45"}'
+    # print(Score.from_json(JSON_STR).player_name)
+    # print(Score.from_json(JSON_STR).score)
+    # print(Score.from_json(JSON_STR).date)
