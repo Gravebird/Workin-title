@@ -18,7 +18,7 @@ class MazeGame:
         """Runs the game"""
         maze = Maze("maze.txt")
         #The start position of the palyer
-        start_pos = maze.player_space
+        start_pos = maze.player.space
         view = MazeView(start_pos)
         #Run the game
         maze_controller = MazeController(maze, view)

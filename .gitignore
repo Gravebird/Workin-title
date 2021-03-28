@@ -1,5 +1,6 @@
 /.vscode
 /__virtualEnv
+maze/__virtualEnv
 /__pycache__
 maze/controllers/__pycache__
 maze/models/__pycache__

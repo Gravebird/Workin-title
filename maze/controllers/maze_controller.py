@@ -58,7 +58,7 @@ class MazeController:
                         if input_timer <= 0:
                             #Update player position
                             input_timer = framerate
-                            (Px, Py) = self._maze.player_space
+                            (Px, Py) = self._maze.player.space
                             self.move_player(input_direction, Px, Py)
 
                     #Check if previously had an input, but user let go
@@ -66,7 +66,7 @@ class MazeController:
                         waiting_for_input = False
                         input_timer = 0
                         #Update player position
-                        (Px, Py) = self._maze.player_space
+                        (Px, Py) = self._maze.player.space
                         self.move_player(previous_input, Px, Py)
                         previous_input = None
 
@@ -150,4 +150,5 @@ class MazeController:
 
         if self._maze.is_item((Px, Py)):
             self._maze.player.backpack = self._maze.map[Px][Py]
-        self._maze.player_space = (Px, Py)
+            self._maze.remove_item_from_maze((Px, Py))
+        self._maze.player.space = (Px, Py)

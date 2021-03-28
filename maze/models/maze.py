@@ -29,8 +29,7 @@ class Maze:
             mazeList.append(list(item)) 
 
         self._map = mazeList
-        self._player = Player()
-        self._player_space = self.find_player_space()
+        self._player = Player(self.find_player_space())
         self._exit_space = self.find_exit()
         self._empty_spaces = self.find_empty_spaces()
         
@@ -51,20 +50,6 @@ class Maze:
     @property
     def player(self):
         return self._player
-
-    @property
-    def player_space(self):
-        return self._player_space
-
-    @player_space.setter
-    def player_space(self, new_space: tuple):
-        """
-        Updates the maze map and player_space variable with the new player space
-        """
-        (old_x, old_y) = self._player_space
-        self._map[old_x][old_y] = " "
-        self._player_space = new_space
-        self._map[new_space[0]][new_space[1]] = "P"
     
 
     def is_player_at_exit(self):
@@ -74,7 +59,7 @@ class Maze:
         :return: If the player is at the exit
         :rtype: bool
         """
-        return self._player_space == self._exit_space
+        return self._player.space == self._exit_space
 
     
     def find_player_space(self):
@@ -194,7 +179,7 @@ class Maze:
         for x, row in enumerate(self._map):
             for y, content in enumerate(row):
                 if self.can_move_to(x, y) \
-                    and self._player_space != (x,y) \
+                    and self._player.space != (x,y) \
                     and content != 'E':
                     empty_spaces.append((x, y))
 
@@ -213,6 +198,19 @@ class Maze:
         :type space: A tuple of 2 integers | X,Y Coordinates
         """
         self._empty_spaces.remove(space)
+
+
+    def remove_item_from_maze(self, space:tuple):
+        """
+        Removes any items from the given space (which will then be rendered as empty).
+        This function will also re-add that space to the list of empty spaces so
+        it might be used again in the future.
+
+        :param space: The space of the item to be removed
+        :type space: Tuple of ints | X Y coordinates
+        """
+        self._map[space[0]][space[1]] = " "
+        self._empty_spaces.append(space)
 
     
     def place_object(self, space:tuple, letter:str):
@@ -240,6 +238,7 @@ class Maze:
 
         self._map[space[0]][space[1]] = letter
         self.remove_from_empty_spaces_list(space)
+        print(f"DEBUG: Added item to space: {space}")
 
 
     def add_object_to_maze(self, letter:str):

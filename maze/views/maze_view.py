@@ -41,8 +41,23 @@ class MazeView:
                 spot += 1
             level += 1
         
+        self.tile_print_player(maze.player.space[1], maze.player.space[0], self._screen)
+        print(maze.player.space)
+
         pygame.display.flip()
+
     
+    def tile_print_player(self, x, y, screen_s):
+        """
+        This method blits the player (cathorse) onto the screen. This method should
+        be called after all other blitting has been completed, so the cathorse
+        appears on top of the other images.
+        """
+        pix = 40
+        #Load the player
+        pllayer = pygame.image.load('images/cathorse.png') #Cathorse.
+        screen_s.blit(pygame.transform.smoothscale(pllayer, (pix,pix)), ((x *pix), (y * pix)))
+
 
     def tile_print(self, x, y, type_e, screen_s):
         """
@@ -98,8 +113,3 @@ class MazeView:
             #Load the entrance
             entry = pygame.image.load('images/holein.png')
             screen_s.blit(pygame.transform.smoothscale(entry, (pix,pix)), ((x *pix), (y * pix)))
-        
-        if type_e == "P":
-            #Load the player
-            pllayer = pygame.image.load('images/cathorse.png') #Cathorse.
-            screen_s.blit(pygame.transform.smoothscale(pllayer, (pix,pix)), ((x *pix), (y * pix)))
