@@ -33,10 +33,11 @@ class MazeController:
         clock = pygame.time.Clock()
         input_timer = 0
         framerate = 10
+        self._view.display(self._maze)
+
 
         while not self._maze.is_player_at_exit():
             #clock.tick(framerate)
-            self._view.display(self._maze)
             waiting_for_input = True
             previous_input = None #Default values
             input_direction = None #Default values
@@ -59,7 +60,10 @@ class MazeController:
                             #Update player position
                             input_timer = framerate
                             (Px, Py) = self._maze.player.space
+                            self._view.player_update(Py , Px , " ")
                             self.move_player(input_direction, Px, Py)
+                            (Px, Py) = self._maze.player.space
+                            self._view.player_update(Py , Px , "P")
 
                     #Check if previously had an input, but user let go
                     elif previous_input != None and input_direction == None:
@@ -67,8 +71,12 @@ class MazeController:
                         input_timer = 0
                         #Update player position
                         (Px, Py) = self._maze.player.space
+                        self._view.player_update(Py , Px , " ")
                         self.move_player(previous_input, Px, Py)
+                        (Px, Py) = self._maze.player.space
+                        self._view.player_update(Py , Px , "P")
                         previous_input = None
+                        
 
                     #Check if user pressed a key
                     elif input_direction != None:

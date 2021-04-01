@@ -46,7 +46,11 @@ class MazeView:
 
         pygame.display.flip()
 
-    
+    def player_update(self, x, y, type_e):
+        self.tile_print(x, y, type_e, self._screen)
+        pygame.display.flip()
+
+
     def tile_print_player(self, x, y, screen_s):
         """
         This method blits the player (cathorse) onto the screen. This method should
@@ -108,6 +112,9 @@ class MazeView:
             #Load Item4
             item4 = pygame.image.load('images/pinkbird.png')
             screen_s.blit(pygame.transform.smoothscale(item4, (pix,pix)), ((x *pix), (y * pix)))
+        if type_e == "P":
+            pllayer = pygame.image.load('images/cathorse.png') #Cathorse.
+            screen_s.blit(pygame.transform.smoothscale(pllayer, (pix,pix)), ((x *pix), (y * pix)))
 
         if self._entry[0] == y and self._entry[1] == x:
             #Load the entrance
