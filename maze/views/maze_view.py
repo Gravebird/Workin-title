@@ -4,6 +4,7 @@
 
 from models.maze import Maze
 import pygame
+from os import path
 
 class MazeView:
     """
@@ -18,6 +19,8 @@ class MazeView:
     :param start_pos: The space where the player starts
     :type start_pos: A tuple | X Y coordinates
     """
+    CURR_DIR = path.dirname(path.abspath(__file__))
+    IMG_DIR = path.join(path.dirname(CURR_DIR), "images")
     def __init__(self, start_pos: tuple):
         self._width = 720
         self._height = 440
@@ -25,6 +28,17 @@ class MazeView:
         self._entry = start_pos
         pygame.display.flip()
 
+    @classmethod
+    def find_img(cls, image):
+        """
+        Finds an image relative to the image directory
+
+        :param image: Image to be found
+        :type image: str
+        :return: Path to image
+        :rtype: str
+        """
+        return path.join(cls.IMG_DIR, image)
     
     def display(self, maze):
         """
@@ -59,7 +73,7 @@ class MazeView:
         """
         pix = 40
         #Load the player
-        pllayer = pygame.image.load('images/cathorse.png') #Cathorse.
+        pllayer = pygame.image.load(self.find_img("cathorse.png")) #Cathorse.
         screen_s.blit(pygame.transform.smoothscale(pllayer, (pix,pix)), ((x *pix), (y * pix)))
 
 
@@ -86,37 +100,37 @@ class MazeView:
 
         if type_e == 'X':
             #Loads the walls
-            tree = pygame.image.load('images/trees.png')
+            tree = pygame.image.load(self.find_img('trees.png'))
             screen_s.blit(pygame.transform.smoothscale(tree, (pix,pix)), (x *pix, y * pix))
         elif type_e ==' ' or type_e == "P":
             #Loads walkable tiles
-            walktile = pygame.image.load('images/walkintile.png')
+            walktile = pygame.image.load(self.find_img('walkintile.png'))
             screen_s.blit(pygame.transform.smoothscale(walktile, (pix,pix)), (x *pix, y * pix))
         elif type_e == 'E':
             #Loads the exit
-            exit_maze = pygame.image.load('images/boxcat.png')
+            exit_maze = pygame.image.load(self.find_img('boxcat.png'))
             screen_s.blit(pygame.transform.smoothscale(exit_maze, (pix,pix)), ((x *pix), (y * pix)))
         elif type_e == "A":
             #Load Item1
-            item1 = pygame.image.load('images/birds1.png')
+            item1 = pygame.image.load(self.find_img('birds1.png'))
             screen_s.blit(pygame.transform.smoothscale(item1, (pix,pix)), ((x *pix), (y * pix)))
         elif type_e == "B":
             #Load Item2
-            item2 = pygame.image.load('images/birds2.png')
+            item2 = pygame.image.load(self.find_img('birds2.png'))
             screen_s.blit(pygame.transform.smoothscale(item2, (pix,pix)), ((x *pix), (y * pix)))
         elif type_e == "C":
             #Load Item3
-            item3 = pygame.image.load('images/fatbird3.png')
+            item3 = pygame.image.load(self.find_img('fatbird3.png'))
             screen_s.blit(pygame.transform.smoothscale(item3, (pix,pix)), ((x *pix), (y * pix)))
         elif type_e == "D":
             #Load Item4
-            item4 = pygame.image.load('images/pinkbird.png')
+            item4 = pygame.image.load(self.find_img('pinkbird.png'))
             screen_s.blit(pygame.transform.smoothscale(item4, (pix,pix)), ((x *pix), (y * pix)))
         if type_e == "P":
-            pllayer = pygame.image.load('images/cathorse.png') #Cathorse.
+            pllayer = pygame.image.load(self.find_img('cathorse.png')) #Cathorse.
             screen_s.blit(pygame.transform.smoothscale(pllayer, (pix,pix)), ((x *pix), (y * pix)))
 
         if self._entry[0] == y and self._entry[1] == x:
             #Load the entrance
-            entry = pygame.image.load('images/holein.png')
+            entry = pygame.image.load(self.find_img('holein.png'))
             screen_s.blit(pygame.transform.smoothscale(entry, (pix,pix)), ((x *pix), (y * pix)))

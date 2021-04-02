@@ -1,4 +1,9 @@
-from models.score import Score
+import sys
+import os
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+#This MESS of sys path is just to make it possible to import the score model
+#   from the maze game path.
+from maze.models.score import Score #It thinks there's an error when there is not.
 import json
 
 class ScoreController():
@@ -32,4 +37,9 @@ class ScoreController():
         with open(self._filepath, 'r') as json_file:
             json_data = json.load(json_file)
         for json_score in json_data:
-            self._scores.append(Score.from_dict(json_score))
+            score = Score(
+                json_score["name"],
+                json_score["score"],
+                json_score["date"]
+                )
+            self._scores.append(score)

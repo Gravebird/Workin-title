@@ -2,13 +2,13 @@
 
 {% block content %}
     <h1>{% block title %}Highscores{% endblock %}</h1>
-    <ol>
+    <ol class=>
         {% for score in scores %}
         <li>{{score.name}}</li>
         {% if score.score == 1 %}
-            <p>They earned {{score.score}} point on {{score.date}}</p>
+            <p>{{score.name}} earned {{score.score}} point on {{score.date}}</p>
         {% endif %} {% if score.score != 1 %}
-            <p>They earned {{score.score}} points on {{score.date}}</p>
+            <p>{{score.name}} earned {{score.score}} points on {{score.date}}</p>
         {% endif %}
         {% endfor %}
     </ol>
