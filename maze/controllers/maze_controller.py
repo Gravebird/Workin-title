@@ -34,59 +34,31 @@ class MazeController:
         input_timer = 0
         framerate = 10
         self._view.display(self._maze)
-
+        key_held_down = 0
+        prev_input = None
 
         while not self._maze.is_player_at_exit():
-            #clock.tick(framerate)
-            waiting_for_input = True
-            previous_input = None #Default values
-            input_direction = None #Default values
+            # Game loop, while the player has not reached the exit
+            clock.tick(framerate)
+            keys = pygame.key.get_pressed()
+            input_direction = self.get_input(keys)
 
-            while waiting_for_input:
-                clock.tick(framerate)
-                #Get user input
-                keys = pygame.key.get_pressed()
-                input_direction = self.get_input(keys)
-                #If the input is none, check to see if the previous input wasn't
-                #If there's a current input, begin the countdown to move.
-
-                if input_timer <= 0 or input_direction == None:
-                    #Check if current input is same as previous input, but not None
-                    if input_direction != None and previous_input == input_direction:
-                        waiting_for_input = False
-                        #Counts down each frame (1s) to move
-                        input_timer -= 1
-                        if input_timer <= 0:
-                            #Update player position
-                            input_timer = framerate
-                            (Px, Py) = self._maze.player.space
-                            self._view.player_update(Py , Px , " ")
-                            self.move_player(input_direction, Px, Py)
-                            (Px, Py) = self._maze.player.space
-                            self._view.player_update(Py , Px , "P")
-
-                    #Check if previously had an input, but user let go
-                    elif previous_input != None and input_direction == None:
-                        waiting_for_input = False
-                        input_timer = 0
-                        #Update player position
-                        (Px, Py) = self._maze.player.space
-                        self._view.player_update(Py , Px , " ")
-                        self.move_player(previous_input, Px, Py)
-                        (Px, Py) = self._maze.player.space
-                        self._view.player_update(Py , Px , "P")
-                        previous_input = None
-                        
-
-                    #Check if user pressed a key
-                    elif input_direction != None:
-                        previous_input = input_direction
-                        input_timer = framerate
-                        
+            if input_direction != None:
+                if prev_input == input_direction and key_held_down < framerate:
+                    key_held_down += 1
                 else:
-                    input_timer -= 1
-                
-                pygame.event.pump()
+                    (Px, Py) = self._maze.player.space
+                    self._view.player_update(Py, Px, " ")
+                    self.move_player(input_direction, Px, Py)
+                    (Px, Py) = self._maze.player.space
+                    self._view.player_update(Py, Px, "P")
+                    key_held_down = 0
+            
+            prev_input = input_direction
+
+            pygame.event.pump()
+            
+
 
         ### Player has reached the end of the maze ###
 
