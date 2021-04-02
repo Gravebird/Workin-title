@@ -14,16 +14,26 @@ class Score:
     :param score_: Player's score (last game)
     :type score_: int
     """
-    def __init__(self, player_name_, score_):
+    TIME_FORMAT = "%Y/%m/%d"
+    def __init__(self, player_name_, score_, time_=None):
         """self._date: get the current date & time
         """
         self._player_name = player_name_
         self._score = score_
-        self._date = datetime.now().strftime("%Y/%m/%d %H:%M:%S")
+        if time_ == None: #By default, set time to now
+            self._date = datetime.now().strftime(self.TIME_FORMAT)
+        elif self.verify_datetime(time_): #Otherwise, set time to the given time value
+            self._date = time_
 
+
+    def __str__(self):
+        return f"Score: {self._score}, {self._score}"
+    
+    def __gt__(self, other): #For ordering by score.
+        return self._score > other._score
 
     @property
-    def player_name(self):
+    def name(self):
         return self._player_name
 
 
@@ -36,7 +46,15 @@ class Score:
     def date(self):
         return self._date
 
+    @classmethod
+    def verify_datetime(cls, time):
+        try:
+            datetime.strptime(time, cls.TIME_FORMAT)
+            return True
+        except:
+            raise ValueError("Incorrect datetime format")
 
+    @staticmethod
     def from_json(json_str):
         """Convert JSON string into Score object
 
@@ -45,9 +63,10 @@ class Score:
         :return: Score object
         :rtype: Score
         """
-        return Score.from_dict(json.loads(json_str))
+        new_score = Score.from_dict(json.loads(json_str))
+        return new_score
 
-
+    @staticmethod
     def from_dict(score_dict):
         """Convert dictionary into Score object
 
@@ -56,11 +75,9 @@ class Score:
         :return: Score object
         :rtype: Score
         """
-        NewScore = Score(score_dict["name"], score_dict["score"])
-        NewScore._date = score_dict["datetime"]
+        NewScore = Score(score_dict["name"], score_dict["score"], score_dict["date"])
 
         return NewScore
-
 
     def to_dict(self):
         """Convert Score object into dict
@@ -69,13 +86,12 @@ class Score:
         :rtype: dict
         """
         PlayerScore_dict = {
-            "name": self.player_name,
-            "score": self.score,
-            "datetime": self.date
+            "name": self._player_name,
+            "score": self._score,
+            "date": self._date
         }
         
         return PlayerScore_dict
-
 
     def to_json(self):
         """Convert dict into JSON
