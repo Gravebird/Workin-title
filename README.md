@@ -5,13 +5,13 @@ A maze game called [WORKIN' TITLE]. Made for ACIT-2515 as a final project.
 
 # Project Structure
 Models:
-    maze: read and store the maze map
-    player: contains the backpack which stores the items collected
+    \nmaze: read and store the maze map
+    \nplayer: contains the backpack which stores the items collected
 Views:
-    maze_view: display the maze map and tiles (player, items, exit)
+    \nmaze_view: display the maze map and tiles (player, items, exit)
 Controllers:
-    maze_controller: main controller contains logic of the game
-    mazeGame: setup required objects and calls controller to run the game
+    \nmaze_controller: main controller contains logic of the game
+    \nmazeGame: setup required objects and calls controller to run the game
 
 
 # Dependencies
@@ -23,6 +23,7 @@ The maze game can be easily run by running the main.py program.
 In the maze directory, use:
 `python main.py`
 
+The webserver can be run by running the `server.py` file in the web directory.
 
 # How to control
 User can control the momvent of the player by using either arrow keys or WASD keys. 
