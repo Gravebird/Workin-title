@@ -5,14 +5,24 @@ A maze game called [WORKIN' TITLE]. Made for ACIT-2515 as a final project.
 
 # Project Structure
 Models:
-    \nmaze: read and store the maze map
-    \nplayer: contains the backpack which stores the items collected
+    
+    maze: read and store the maze map
+    
+    player: contains the backpack which stores the items collected
+    
+    score: Manages and saves information on a user's score
+       
 Views:
-    \nmaze_view: display the maze map and tiles (player, items, exit)
-Controllers:
-    \nmaze_controller: main controller contains logic of the game
-    \nmazeGame: setup required objects and calls controller to run the game
 
+    maze_view: display the maze map and tiles (player, items, exit)
+    
+Controllers:
+
+    maze_controller: main controller contains logic of the game
+    
+    mazeGame: setup required objects and calls controller to run the game
+    
+    score_controller: Controls the json file for the webserver. Manages user's highscores
 
 # Dependencies
 pygame==2.0.0
