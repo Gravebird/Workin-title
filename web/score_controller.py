@@ -7,16 +7,31 @@ from maze.models.score import Score #It thinks there's an error when there is no
 import json
 
 class ScoreController():
+    """
+    Manages highscores sent in from users. Keeps scores up to date with JSON file.
+
+    :param json_path: Path to the json file that stores score information
+    :type json_path: str
+    """
     def __init__(self, json_path):
         self._scores = []
         self._filepath = json_path
         self.load_from_json_file()
 
     def print_scores(self):
+        """
+        Prints scores in a specific format
+        """
         for i in self._scores:
             print(f"Score: {i.name} ({i.score})")
 
     def add_score(self, score):
+        """
+        Adds a score object to the list, then updates the JSON file
+
+        :param score: Score object to be added
+        :type score: Score
+        """
         self._scores.append(score)
         self.load_to_json_file()
 
