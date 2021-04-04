@@ -26,6 +26,9 @@ class MazeView:
         self._height = 440
         self._screen = pygame.display.set_mode((self._width, self._height))
         self._entry = start_pos
+
+        self._explosion = [pygame.image.load(self.find_img(f"explosion/frame_{i}.png")) for i in range(25)]
+
         pygame.display.flip()
 
     @classmethod
@@ -134,3 +137,53 @@ class MazeView:
             #Load the entrance
             entry = pygame.image.load(self.find_img('holein.png'))
             screen_s.blit(pygame.transform.smoothscale(entry, (pix,pix)), ((x *pix), (y * pix)))
+
+
+    def display_partial(self, maze, x, y):
+        """
+        This function updates the display of only a part of the maze. This is
+        used when animating the explosion.
+
+        :param maze: The maze that the player navigates
+        :type maze: Maze object
+
+        :param x: The X index of the player in the maze array
+        :type x: int
+
+        :param y: The Y index of the player in the maze array
+        :type y: int
+        """
+        level = 0
+
+        for row in maze.map:
+            spot = 0
+            for pos in row:
+                if (x >= (level - 3) and x <= (level + 3)) and y >= (spot - 3) and y <= (spot + 3):
+                    self.tile_print(spot, level, pos, self._screen)
+                spot += 1
+            level += 1
+    
+
+    def explosion_animation(self, x, y, explosion_count, maze):
+        """
+        Animates an explosion on the position of the player.
+
+        :param x: The X index of the player in the maze array
+        :type x: int
+
+        :param y: The Y index of the player in the maze array
+        :type y: int
+
+        :param explosion_count: Counts what frame of the explosion we are displaying
+        :type explosion_count: int
+
+        :param maze: The maze that the player navigates
+        :type maze: Maze object
+        """
+        pix = 40
+        explosion_adj_x = 80
+        explosion_adj_y = 50
+
+        self.display_partial(maze, x, y)
+        self._screen.blit(self._explosion[explosion_count], ((y * pix) - explosion_adj_y, (x * pix) - explosion_adj_x))
+        pygame.display.flip()

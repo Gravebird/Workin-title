@@ -65,6 +65,12 @@ class MazeController:
         if (len(self._maze.player.backpack) < 4):
             # Player loses (did not collect all 4 items!)
             print("You Lose!")
+            explosion_count = 0
+            (Px, Py) = self._maze.player.space
+            while explosion_count < 25:
+                clock.tick(framerate)
+                self._view.explosion_animation(Px, Py, explosion_count, self._maze)
+                explosion_count += 1
         else:
             # Player wins!
             print("You Win!")
