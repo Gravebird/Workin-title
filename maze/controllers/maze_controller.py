@@ -37,9 +37,13 @@ class MazeController:
         key_held_down = 0
         prev_input = None
 
-        while not self._maze.is_player_at_exit():
+        # Maximum allowed time for the game is 100s
+        max_time = 100
+        time_left = max_time
+
+        while not self._maze.is_player_at_exit() and time_left > 0:
             # Game loop, while the player has not reached the exit
-            clock.tick(framerate)
+            time_elapsed = clock.tick(framerate)
             keys = pygame.key.get_pressed()
             input_direction = self.get_input(keys)
 
@@ -58,12 +62,13 @@ class MazeController:
 
             pygame.event.pump()
             
+            time_left = time_left - time_elapsed / 1000
+            # print(f"{time_left:.2f}")
 
+        ### Player has reached the end of the maze or time is up ###
 
-        ### Player has reached the end of the maze ###
-
-        if (len(self._maze.player.backpack) < 4):
-            # Player loses (did not collect all 4 items!)
+        if (len(self._maze.player.backpack) < 4 or time_left <= 0):
+            # Player loses (did not collect all 4 items or time is up!)
             print("You Lose!")
             explosion_count = 0
             (Px, Py) = self._maze.player.space
@@ -74,6 +79,7 @@ class MazeController:
         else:
             # Player wins!
             print("You Win!")
+            print(f"Your score: {time_left:.2f}")
 
 
     def get_input(self, keys):
@@ -117,22 +123,22 @@ class MazeController:
         if input_direction == "w":
             if self._maze.can_move_to(Px - 1, Py) == True:
                 Px -= 1
-                print(f"\nPlayer location at row {Px}, col {Py}") # new coordinate
+                # print(f"\nPlayer location at row {Px}, col {Py}") # new coordinate
         # Move down (s)
         if input_direction == "s":
             if self._maze.can_move_to(Px + 1, Py) == True:
                 Px += 1
-                print(f"\nPlayer location at row {Px}, col {Py}") # new coordinate
+                # print(f"\nPlayer location at row {Px}, col {Py}") # new coordinate
         # Move left (a)
         if input_direction == "a":
             if self._maze.can_move_to(Px, Py -1) == True:
                 Py -= 1
-                print(f"\nPlayer location at row {Px}, col {Py}") # new coordinate
+                # print(f"\nPlayer location at row {Px}, col {Py}") # new coordinate
         # Move right (d)
         if input_direction == "d":
             if self._maze.can_move_to(Px, Py + 1) == True:
                 Py += 1
-                print(f"\nPlayer location at row {Px}, col {Py}") # new coordinate
+                # print(f"\nPlayer location at row {Px}, col {Py}") # new coordinate
 
         if self._maze.is_item((Px, Py)):
             self._maze.player.backpack = self._maze.map[Px][Py]
