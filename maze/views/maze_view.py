@@ -245,13 +245,23 @@ class MazeView:
         pygame.display.flip()
 
     def end_screen(self, type_):
+        """
+        Displays the end-screen based on a given type of ending
+
+        :param type_: The ending type. Valid entries are "win" and "loss"
+        :type type_: str
+        """
         font = pygame.font.SysFont('Consolas', 20)
+        #Sets the position based on the screen's dimensions for adaptability
         (x, y) = self._width / 5, self._height / 4
         (w, l) = self._width / 1.8, self._height / 5.5
+        #Text to be displayed to the user. Cannot use newlines with Pygame font.render
         loss_text = ["You lost!", "Try again, maybe you won't explode!"]
         win_text = ["You won!", "Check console to submit your score!"]
+        #The end-screen rectangle
         pygame.draw.rect(self._screen, (0,0,0), [x, y, w, l])
         if type_ == "loss":
+            #Likely a faster way of doing this, but oh well!
             for line, text in enumerate(loss_text):
                 self._screen.blit(font.render(text, True, (255,255,255)), (x*1.1, y*1.1+(line*30)))
         if type_ == "win":
