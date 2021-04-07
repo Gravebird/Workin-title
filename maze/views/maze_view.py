@@ -85,6 +85,7 @@ class MazeView:
         font = pygame.font.SysFont('Consolas', 20)
         pygame.draw.rect(self._screen, (0,0,0), [0, 440, 220, 40])
         self._screen.blit(font.render(f'Time remaining: {time:0.0f}', True, (255,255,255)), (0, 440))
+        pygame.display.flip()
 
 
 
