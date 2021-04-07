@@ -45,7 +45,9 @@ class MazeController:
             # Game loop, while the player has not reached the exit
             time_elapsed = clock.tick(framerate)
             keys = pygame.key.get_pressed()
+            self._view.time_remaining(time_left)
             input_direction = self.get_input(keys)
+
 
             if input_direction != None:
                 if prev_input == input_direction and key_held_down < framerate:
@@ -143,4 +145,6 @@ class MazeController:
         if self._maze.is_item((Px, Py)):
             self._maze.player.backpack = self._maze.map[Px][Py]
             self._maze.remove_item_from_maze((Px, Py))
+            self._view.backpack_contents(self._maze.player.backpack)
+
         self._maze.player.space = (Px, Py)

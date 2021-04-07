@@ -23,7 +23,7 @@ class MazeView:
     IMG_DIR = path.join(path.dirname(CURR_DIR), "images")
     def __init__(self, start_pos: tuple):
         self._width = 720
-        self._height = 440
+        self._height = 480
         self._screen = pygame.display.set_mode((self._width, self._height))
         self._entry = start_pos
 
@@ -42,7 +42,52 @@ class MazeView:
         :rtype: str
         """
         return path.join(cls.IMG_DIR, image)
-    
+
+    def backpack_contents(self,item_list):
+        """prints the back pack and its contents
+
+        :param item_list: list of items in backpack
+        :type item_list: list
+        """
+        pix = 40
+        y = 11
+        screen_s = self._screen
+        bag = pygame.image.load(self.find_img('bag.png'))
+        screen_s.blit(pygame.transform.smoothscale(bag, (pix,pix)), ((10 *pix), ( y * pix)))
+        count = 10
+        for type_e in item_list:
+            count += 1
+            x = count
+            if type_e == "A":
+                #Load Item1
+                item1 = pygame.image.load(self.find_img('blue.png'))
+                screen_s.blit(pygame.transform.smoothscale(item1, (pix,pix)), ((x *pix), (y * pix)))
+            elif type_e == "B":
+                #Load Item2
+                item2 = pygame.image.load(self.find_img('blue2.png'))
+                screen_s.blit(pygame.transform.smoothscale(item2, (pix,pix)), ((x *pix), (y * pix)))
+            elif type_e == "C":
+                #Load Item3
+                item3 = pygame.image.load(self.find_img('fat head.png'))
+                screen_s.blit(pygame.transform.smoothscale(item3, (pix,pix)), ((x * pix), (y * pix)))
+            elif type_e == "D":
+                #Load Item4
+                item4 = pygame.image.load(self.find_img('pink head.png'))
+                screen_s.blit(pygame.transform.smoothscale(item4, (pix,pix)), ((x *pix), (y * pix)))
+
+
+    def time_remaining(self, time):
+        """prints out current time
+
+        :param time: the time left in the game
+        :type time: int
+        """
+        font = pygame.font.SysFont('Consolas', 20)
+        pygame.draw.rect(self._screen, (0,0,0), [0, 440, 220, 40])
+        self._screen.blit(font.render(f'Time remaining: {time:0.0f}', True, (255,255,255)), (0, 440))
+
+
+
     def display(self, maze):
         """
         Draws the contents of the maze model to a GUI.
@@ -64,6 +109,16 @@ class MazeView:
         pygame.display.flip()
 
     def player_update(self, x, y, type_e):
+        """
+        class to solely draw player and redraw their last spot.
+
+        :param x: x coordinate
+        :type x: int
+        :param y: y coordinate
+        :type y: int
+        :param type_e: type player, or old spot
+        :type type_e: str
+        """
         self.tile_print(x, y, type_e, self._screen)
         pygame.display.flip()
 

@@ -17,7 +17,7 @@ class Player:
         """
         self._backpack = []
         self._space = space_
-    
+
 
     @property
     def backpack(self):
