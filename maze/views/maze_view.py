@@ -243,3 +243,18 @@ class MazeView:
         self.display_partial(maze, x, y)
         self._screen.blit(self._explosion[explosion_count], ((y * pix) - explosion_adj_y, (x * pix) - explosion_adj_x))
         pygame.display.flip()
+
+    def end_screen(self, type_):
+        font = pygame.font.SysFont('Consolas', 20)
+        (x, y) = self._width / 5, self._height / 4
+        (w, l) = self._width / 1.8, self._height / 5.5
+        loss_text = ["You lost!", "Try again, maybe you won't explode!"]
+        win_text = ["You won!", "Check console to submit your score!"]
+        pygame.draw.rect(self._screen, (0,0,0), [x, y, w, l])
+        if type_ == "loss":
+            for line, text in enumerate(loss_text):
+                self._screen.blit(font.render(text, True, (255,255,255)), (x*1.1, y*1.1+(line*30)))
+        if type_ == "win":
+            for line, text in enumerate(win_text):
+                self._screen.blit(font.render(text, True, (255,255,255)), (x*1.1, y*1.1+(line*30)))
+        pygame.display.flip()
