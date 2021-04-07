@@ -4,6 +4,7 @@
 
 from models.maze import Maze
 from views.maze_view import MazeView
+from models.score import Score
 import pygame
 import pygame.locals
 
@@ -31,7 +32,6 @@ class MazeController:
         """
         pygame.init()
         clock = pygame.time.Clock()
-        input_timer = 0
         framerate = 10
         self._view.display(self._maze)
         key_held_down = 0
@@ -78,11 +78,26 @@ class MazeController:
                 clock.tick(framerate)
                 self._view.explosion_animation(Px, Py, explosion_count, self._maze)
                 explosion_count += 1
+            time_out = 0
+            
+            #pygame.time.delay(5 * 1000)
+            while time_out < (5 * framerate): #To display for 5 seconds
+                clock.tick(framerate)
+                print("DISPLAYING LOSS")
+                self._view.end_screen('loss')
+                time_out += 1
         else:
             # Player wins!
-            print("You Win!")
-            print(f"Your score: {time_left:.2f}")
+            self._view.end_screen('win')
 
+            print("You Win!")
+            points = round((time_left * 100))
+            print(f"Your score: {points}")
+
+            name = input("Input your username for the Scoreboard: ")
+
+            user_score = Score(name, points)
+            user_score.send_score()
 
     def get_input(self, keys):
         """
