@@ -36,7 +36,7 @@ def add_score():
         data.add_score(new_score)
         return "", 204 #Returns sucess
     except:
-       return "Invalid data proivded", 400 #Returns error
+       return "Invalid data provided", 400 #Returns error
 
 if __name__ == "__main__":
     app.run()

@@ -1,4 +1,4 @@
-# maze_controller.py
+#maze_controller.py
 # Primary controller for the maze.
 # Author: Xavier, Leo, Jennie, Bryan, Tiras
 
@@ -83,7 +83,6 @@ class MazeController:
             #pygame.time.delay(5 * 1000)
             while time_out < (5 * framerate): #To display for 5 seconds
                 clock.tick(framerate)
-                print("DISPLAYING LOSS")
                 self._view.end_screen('loss')
                 time_out += 1
         else:

@@ -98,7 +98,6 @@ class Maze:
                 if content == 'E':
                     space_of_exit = (x, y)
                     break
-        print(space_of_exit)
         return space_of_exit    
 
 
@@ -238,7 +237,6 @@ class Maze:
 
         self._map[space[0]][space[1]] = letter
         self.remove_from_empty_spaces_list(space)
-        print(f"DEBUG: Added item to space: {space}")
 
 
     def add_object_to_maze(self, letter:str):
