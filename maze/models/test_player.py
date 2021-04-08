@@ -24,4 +24,4 @@ def test_attributes(test_player):
     assert hasattr(test_player, 'space')
 
     test_player.space = (0,1)
-    assert test_player._space == (0,1)
+    assert test_player._space == (0,1)  

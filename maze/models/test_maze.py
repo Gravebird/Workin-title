@@ -30,7 +30,11 @@ def test_attributes(test_maze):
 def test_find_exit(test_maze):
     assert test_maze.find_exit() == (7,13)
 
-def test_find
+def test_find_random_spot(test_maze):
+    assert type(test_maze.find_random_spot() ) == tuple
+
+def test_can_move_to(test_maze):
+    assert test_maze.can_move_to(1,1) == True
 
 def test_is_exit(test_maze):
     assert test_maze.is_exit((7,13)) == True
