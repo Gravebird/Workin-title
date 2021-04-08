@@ -65,7 +65,7 @@ If you have the server running right now, you can access it here: http://127.0.0
 Going to that web server's page will instantly display any scores it has stored. To store new scores, just win the game!
 
 # How to control
-User can control the momvent of the player by using either arrow keys or WASD keys. 
+User can control the movement of the player by using either arrow keys or WASD keys. 
 By holding down a key, the player will move once every second.
 By tapping a key, the player will move each press.
 
@@ -73,5 +73,5 @@ The goal is to collect all 4 items in the maze and then reach the exit before th
 Time limit is 100 seconds.
 
 # AOB (Any Other Business)
-User is not able to go outside of the grid.
-User is required to collect all 4 items and then arrives the exit.
+User is not able to go outside of the grid, nor through the walls.
+User is required to collect all 4 items before they arrive the exit.
