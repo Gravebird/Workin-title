@@ -61,7 +61,7 @@ In this filepath, simple run:
 `python server.py`
 
 This will begin hosting the server on your local machine at port 5000.
-If you have the server running right now, you can access it ![here!](http://127.0.0.1:5000/)
+If you have the server running right now, you can access it here: http://127.0.0.1:5000/
 Going to that web server's page will instantly display any scores it has stored. To store new scores, just win the game!
 
 # How to control
