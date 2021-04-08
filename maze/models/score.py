@@ -4,6 +4,7 @@
 
 
 from datetime import datetime
+from requests import put
 import json
 
 class Score:
@@ -15,6 +16,8 @@ class Score:
     :type score_: int
     """
     TIME_FORMAT = "%Y/%m/%d"
+    URL = 'http://127.0.0.1:5000/'#default self-hosted server.
+
     def __init__(self, player_name_, score_, time_=None):
         """self._date: get the current date & time
         """
@@ -24,7 +27,6 @@ class Score:
             self._date = datetime.now().strftime(self.TIME_FORMAT)
         elif self.verify_datetime(time_): #Otherwise, set time to the given time value
             self._date = time_
-
 
     def __str__(self):
         return f"Score: {self._score}, {self._score}"
@@ -53,7 +55,7 @@ class Score:
             return True
         except:
             raise ValueError("Incorrect datetime format")
-
+            
     @staticmethod
     def from_json(json_str):
         """Convert JSON string into Score object
@@ -78,6 +80,18 @@ class Score:
         NewScore = Score(score_dict["name"], score_dict["score"], score_dict["date"])
 
         return NewScore
+
+    def send_score(self):
+        """
+        Sends the score to the web server
+        """
+        r = put(self.URL, json=self.to_json()) #Put the score to the webserver
+        if r.status_code == 204:
+            print("\nScore submitted successfully!\n")
+        else:
+            print("\nAn error occurred.\nCheck to see if the web-server is running.")
+            print(f"\nERROR CODE: {r.status_code}")
+
 
     def to_dict(self):
         """Convert Score object into dict

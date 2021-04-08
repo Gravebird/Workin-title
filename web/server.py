@@ -30,7 +30,8 @@ def add_score():
     Adds a score to the stored scores.
     """
     try:
-        new_data = request.get_json()
+        json_data = request.get_json()
+        new_data = json.loads(json_data)
         new_score = Score(new_data["name"], new_data["score"], new_data["date"])
         data.add_score(new_score)
         return "", 204 #Returns sucess
