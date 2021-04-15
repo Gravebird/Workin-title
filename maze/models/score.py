@@ -16,7 +16,7 @@ class Score:
     :type score_: int
     """
     TIME_FORMAT = "%Y/%m/%d"
-    URL = 'http://127.0.0.1:5000/'#default self-hosted server.
+    URL = 'http://143.198.119.203/'#default self-hosted server.
 
     def __init__(self, player_name_, score_, time_=None):
         """self._date: get the current date & time
